@@ -9,7 +9,7 @@ flask与数据库交互插件：Flask-SQLAlchemy：[The Python SQL Toolkit and O
 
 案例：[购书系统]
 
-参考：[flask教程]
+参考：[flask教程] [FlaskWeb开发：基于Python的Web应用开发实战.pdf]
 
 ##算法
 周期提醒（重复事件）
@@ -21,3 +21,4 @@ flask与数据库交互插件：Flask-SQLAlchemy：[The Python SQL Toolkit and O
 [购书系统]:http://python.jobbole.com/81065/
 [The Python SQL Toolkit and Object Relational Mapper]:http://www.sqlalchemy.org/
 [flask教程]:http://www.oschina.net/translate/the-flask-mega-tutorial-part-i-hello-world
+[FlaskWeb开发：基于Python的Web应用开发实战.pdf]:http://pan.baidu.com/s/1i3EnOET

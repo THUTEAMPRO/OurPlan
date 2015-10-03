@@ -12,7 +12,8 @@ flask与数据库交互插件：Flask-SQLAlchemy：[The Python SQL Toolkit and O
 参考：[flask教程] 
 
 [FlaskWeb开发基于Python的Web应用开发实战]
-[html5 EDX opencourse]
+
+html5 EDX opencourse:https://www.edx.org/xseries/html5-w3c?utm_source=Course+Announcements+Mailing+List&utm_medium=email&utm_content=title&utm_campaign=Student_Newsletter_September_29
 
 ##算法
 周期提醒（重复事件）

@@ -4,6 +4,10 @@
 # $Author: cz <chenze-321n[at]163[dot]com>
 from server import get_app
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 """
 def wsgi_app():
     app=get_app()

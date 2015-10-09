@@ -1,4 +1,6 @@
 .env/
 *~
 *.pyc
+.DS_Store
+*.iml
 .database.db

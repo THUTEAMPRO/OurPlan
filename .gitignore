@@ -2,3 +2,5 @@
 *~
 *.pyc
 .database.db
+venv/
+.DS_Store

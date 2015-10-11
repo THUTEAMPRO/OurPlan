@@ -7,4 +7,4 @@ from util import *
 @app.route("/")
 @app.route("/home")
 def home():
-    return redirect("/testapi.html")
+    return render_template("example.html", content="args example")

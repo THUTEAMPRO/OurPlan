@@ -5,4 +5,6 @@
 *.iml
 .database.db
 venv/
+server/data.sqlite
+manage/Flask_Login*
 .DS_Store

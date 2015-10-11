@@ -5,7 +5,7 @@ from flask import request, Response
 from flask_login import login_user, login_required, logout_user
 from functools import wraps
 from server import get_app
-from model import User
+#from model import User
 import json
 
 app = get_app()

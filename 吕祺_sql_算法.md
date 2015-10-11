@@ -9,7 +9,10 @@ flask与数据库交互插件：Flask-SQLAlchemy：[The Python SQL Toolkit and O
 
 案例：[购书系统]
 
-参考：[flask教程] 
+参考：[flask教程], [flask-mega-tutorial]
+
+
+[flask-mega-tutorial]http://www.pythondoc.com/flask-mega-tutorial/
 
 [FlaskWeb开发基于Python的Web应用开发实战]
 

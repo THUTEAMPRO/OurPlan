@@ -1,0 +1,45 @@
+div#container{}
+div#header {background-color:#eeeeee;}
+div#menu {background-color:#eeeeee;height:520px;width:200px;float:left;border:1px solid menu}
+div#calendarCon {height:520px;}
+div#footer {background-color:#eeeeee;clear:both;text-align:center;}
+h1 {margin-bottom:0;}
+h2 {margin-bottom:0;font-size:18px;}
+ul {margin:0;}
+li {list-style:none;}
+div#.DateTable { 
+                  font: 10pt;  
+    }
+    .WeekTd, .BlankTd { 
+                  font: 10pt; 
+    }
+    .Today { 
+                  font: 10pt; 
+                  color: red;                   
+                  border: 1px solid buttonface; 
+    }
+    .MonthTd { 
+                  font: 10pt; 
+                  font-family: webdings; 
+                  cursor: hand; 
+                  border: 1px solid menu; 
+                  zmm: expression(onmouseenter = function() {
+                                  style.color = 'red'; 
+                       }, 
+                       onmouseout = function() { 
+                                  style.color = ''; 
+                       }); 
+    }
+    .SelectTd { 
+                  border: 1px solid buttonface; 
+    }
+
+    .out { 
+                  border: 1px solid buttonface; 
+    }
+    .down { 
+                  border-left: 1px solid dimgray; 
+                  border-top: 1px solid dimgray; 
+                  border-right: 1px solid dimgray; 
+                  border-bottom: 1px solid dimgray; 
+    }

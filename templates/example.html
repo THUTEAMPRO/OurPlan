@@ -2,9 +2,55 @@
 {% block page_content %}
 
 <label>{{content}}</label>
+<link rel="stylesheet" type="text/css" href="ourplan.css" />
+<script>
+$(document).ready(function(){
+ $("#w-view").hide();
+  $("#m-view").click(function(){
+	$("#w-view").show();
+	$("#m-view").hide();
+  });
+  $("#w-view").click(function(){
+	$("#m-view").show();
+	$("#w-view").hide();
+  });
+});
+</script>
 
-<div>
-    <h1>example</h1>
+<body>
+
+<div id="container">
+
+<div id="header">
+<h1 align='center'>OurPlan</h1>
+<div align='right'>
+	<button>login</button>
+	<button id='w-view'>week view</button>
+	<button id='m-view'>month view</button>
 </div>
+</div>
+
+<div id="menu">
+<h2>Menu</h2>
+<ul>
+<li>item 1</li>
+<li>item 2</li>
+<li>item 3</li>
+</ul>
+<h2>Alice's Calendar</h2>
+	<form action="" method="get">
+	<ul>
+		<li><label><input name="CalendarGroup" type="checkbox" value="" />个人 </label></li>
+		<li><label><input name="CalendarGroup" type="checkbox" value="" />组1 </label></li>
+		<li><label><input name="CalendarGroup" type="checkbox" value="" />组2 </label></li>
+	</ul>
+	</form>
+</div>
+
+<div id="content">
+<script src="/javascript/table.month.js"></script>
+<div id="oContainer"></div> 
+
+
 
 {% endblock %}

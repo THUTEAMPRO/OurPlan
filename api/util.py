@@ -16,6 +16,7 @@ class api_impl(object):
     API_PREFIX = '/api'
 
     endpoint = ' '
+
     def __init__(self, url_rule, **kwargs):
         self.url_rule = api_impl.API_PREFIX + url_rule
         self.kwargs=kwargs

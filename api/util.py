@@ -4,11 +4,12 @@
 from flask import request, Response
 from flask_login import login_user, login_required, logout_user
 from functools import wraps
-from server import get_app
+from server import get_app, get_db
 #from model import User
 import json
 
 app = get_app()
+db = get_db()
 
 class api_impl(object):
     api_list = list()
@@ -32,7 +33,8 @@ class api_impl(object):
         @wraps(func)
         def view_func(**kwargs):
             code = 200
-            rst = dict()
+            rst = self.func(**kwargs)
+            """
             try:
                 if(request.method=='POST'):
                     requestArgs = json.loads(request.data)
@@ -44,6 +46,7 @@ class api_impl(object):
             except ValueError:
                 code = 400
                 rst = dict(error="request format not right",data=request.data)
+            """
             assert isinstance(rst, dict) or isinstance(rst, list),\
                     "ret value {0} can not be jsonified".format(str(rst))
 

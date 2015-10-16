@@ -8,6 +8,8 @@ from model import User
 from server import get_db, get_app
 
 from . import auth
+from forms import LoginForm, RegistrationForm
+
 class NameForm(Form):
     name = StringField('What is your name?', validators=[Required()])
     email = StringField('What is your email?', validators=[Required()])
@@ -46,22 +48,21 @@ def login():
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    form = NameForm()
+    form = RegistrationForm()
     if form.validate_on_submit():
-        name = form.name.data
+        username = form.username.data
         emails = form.email.data
-        user = User.query.filter_by(username=name).first()
+        user = User.query.filter_by(username=username).first()
         if user is None:
             db = get_db()
-            db.create_all()
-            user_tmp = User(username=name, email=emails)
+            user_tmp = User(username=username, email=emails)
             db.session.add(user_tmp)
             session['known'] = False
         else:
             session['known'] = True
-        session['name'] = name
+        session['name'] = username
         session['email'] = emails
-        return redirect(url_for('register'))
-    return render_template('register.html', form=form, name=session.get('name'),
-                           email=session.get('email'),
-                           known=session.get('known', False))
+        return redirect('/home')
+    else:
+        return render_template("register.html", form=form)
+    #return render_template('register.html', form=form, name=session.get('name'), email=session.get('email'), known=session.get('known', False))

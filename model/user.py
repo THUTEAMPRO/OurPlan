@@ -23,7 +23,7 @@ class User(_db.Model):
         self.password_hash = generate_password_hash(password)
 
     def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(str(self.password_hash), password)
 
     def __init__(self, username, email):
         self.username = username
@@ -34,26 +34,16 @@ class User(_db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-        #     @staticmethod
-        #     def get_user(username):
-        #         if(username=="test"):
-        #             if User.TEST_USER is None:
-        #                 User.TEST_USER=User();
-        #             return User.TEST_USER
-        #         else:
-        #             return None
-        #
-        #     def __init__(self):
-        #         self._authenticated = False
-        #
-        #     def is_authenticated(self):
-        #         return self._authenticated
-        #
-        #     def is_active(self):
-        #         return True
-        #
-        #     def is_anonymous(self):
-        #         return True
-        #
-        #     def get_id(self):
-        #         return u"test"
+        
+    
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.username)

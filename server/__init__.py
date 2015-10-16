@@ -55,9 +55,9 @@ def get_app():
     def load_user(userId):
         from model import User
 
-        user = User.get_user(userId)
-        if user is not None:
-            user._authenticated = True
+        user = User.query.filter_by(username=userId).first()
+        #if user is not None:
+        #    user._authenticated = True
         return user
 
     # from api.auth import auth as auth_blueprint
@@ -114,8 +114,8 @@ get_mail()
 get_db()
 
 
-from api.auth import auth
-_app.register_blueprint(auth, url_prefix = '/auth')
+#from api.auth import auth
+#_app.register_blueprint(auth, url_prefix = '/auth')
 
 
 #

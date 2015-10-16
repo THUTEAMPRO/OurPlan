@@ -85,7 +85,7 @@ function DateClass(_container) {
 }
    
     window.onload = function() {
-         oDate = new DateClass(self.oContainer);
+         oDate = new DateClass(self.mTableContainer);
          oDate.showTable(new Date().getFullYear(), new Date().getMonth()+1);
     }
     

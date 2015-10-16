@@ -3,16 +3,22 @@
 
 <label>{{content}}</label>
 <link rel="stylesheet" type="text/css" href="ourplan.css" />
+<script src="/javascript/jquery-1.8.3.min.js"></script>
 <script>
 $(document).ready(function(){
  $("#w-view").hide();
+ $("#wTableContainer").hide();
   $("#m-view").click(function(){
 	$("#w-view").show();
 	$("#m-view").hide();
+	$("#wTableContainer").show();
+	$("#mTableContainer").hide();
   });
   $("#w-view").click(function(){
 	$("#m-view").show();
 	$("#w-view").hide();
+	$("#mTableContainer").show();
+	$("#wTableContainer").hide();
   });
 });
 </script>
@@ -21,22 +27,21 @@ $(document).ready(function(){
 
 <div id="container">
 
-<div id="header">
-<h1 align='center'>OurPlan</h1>
-<div align='right'>
-	<button id='w-view'>week view</button>
-	<button id='m-view'>month view</button>
-</div>
-</div>
+	<div id="header">
+		<div align='right'>
+			<button id='w-view'>week view</button>
+			<button id='m-view'>month view</button>
+		</div>
+	</div>
 
 <div id="menu">
-<h2>Menu</h2>
-<ul>
-<li>item 1</li>
-<li>item 2</li>
-<li>item 3</li>
-</ul>
-<h2>Alice's Calendar</h2>
+	<h2>Menu</h2>
+	<ul>
+		<li>item 1</li>
+		<li>item 2</li>
+		<li>item 3</li>
+	</ul>
+	<h2>Alice's Calendar</h2>
 	<form action="" method="get">
 	<ul>
 		<li><label><input name="CalendarGroup" type="checkbox" value="" />个人 </label></li>
@@ -47,9 +52,19 @@ $(document).ready(function(){
 </div>
 
 <div id="content">
-<script src="/javascript/table.month.js"></script>
-<div id="oContainer"></div> 
+	<div id="wTableContainer"><script src="/javascript/table.week.js"></script></div> 
+	<div id="mTableContainer"><script src="/javascript/table.month.js"></script></div> 
+</div>
 
+<!--- 
+<div id="wTableContainer"><script src="/javascript/table.week.js"></script></div> 
+	<div id="mTableContainer"><script src="/javascript/table.month.js"></script></div> 
 
+	<div id="wTableContainer">hahah 1</div> 
+	<div id="mTableContainer">hahah 2</div> 
+>
+<!--->
+
+</body>
 
 {% endblock %}

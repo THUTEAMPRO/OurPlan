@@ -4,7 +4,9 @@
 .DS_Store
 *.iml
 .database.db
+migrations/
 venv/
 server/data.sqlite
 manage/Flask_Login*
+.idea/
 .DS_Store

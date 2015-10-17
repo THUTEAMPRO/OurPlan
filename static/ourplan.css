@@ -1,4 +1,6 @@
-div#container{}
+div#wTableContainer{
+	height:520px;
+}
 div#header {background-color:#eeeeee;}
 div#menu {background-color:#eeeeee;height:520px;width:200px;float:left;border:1px solid menu}
 div#calendarCon {height:520px;}

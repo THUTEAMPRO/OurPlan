@@ -3,6 +3,7 @@
 # $Author: cz <chenze-321n[at]163[dot]com>
 
 from user import User
+from task import Task
 
 from server import get_db
 

@@ -19,24 +19,18 @@
                 <li><a href="/">Home</a></li>
             </ul>
 
-            {% if current_user.is_authenticated %}
-                <ul class="nav navbar-nav">
-                    <li><a href="/auth/logout">logout</a></li>
-                </ul>
-                
-                <ul class="nav navbar-nav">
-                    <li><a href="/email">email</a></li>
-                </ul>
-            {% else %}
-                <ul class="nav navbar-nav">
-                    <li><a href="/auth/register">register</a></li>
-                </ul>
 
-                <ul class="nav navbar-nav">
-                    <li><a href="/auth/login">login</a></li>
-                </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="/register">register</a></li>
+            </ul>
 
-            {% endif %}
+            <ul class="nav navbar-nav">
+                <li><a href="/login">login</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav">
+                <li><a href="/email">email</a></li>
+            </ul>
         </div>
     </div>
 </div>

@@ -7,12 +7,8 @@ from util import *
 @app.route("/")
 @app.route("/home")
 def home():
-    user_data={}
-    task_data=[]
-    if current_user.is_authenticated:
-        user_data=current_user.get_dict()
-        task_data=api.task.get_task()
-    return render_template("example.html", content="args example", user_data=user_data, task_data=task_data)
+    user=dict(username="testname",password="testpass")
+    return render_template("example.html", content="args example", user_data=user, calendar_data={})
 
 @app.route("/login")
 def _login():

@@ -6,7 +6,6 @@ from util import *
 from model import User
 from flask import session
 from auth.forms import LoginForm
-from flask_login import current_user
 
 @api_impl("/login", methods=["POST"])
 def user_login(**kwargs):
@@ -20,10 +19,6 @@ def user_login(**kwargs):
         else:
             return dict(fail=1)
 
-@api_impl("/user")
-@login_required
-def user(**kwargs):
-    return dict(success=1,userId=current_user.id)
 
 @api_impl("/register", methods=["POST"])
 def user_register(**kwargs):

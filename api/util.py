@@ -1,8 +1,11 @@
 # -*- coding:utf-8 -*-
 # $File: util.py
 # $Author: cz <chenze-321n[at]163[dot]com>
-from flask import request, Response
-from flask_login import login_user, login_required, logout_user
+from flask import request, Response, render_template
+from flask_login import login_user, login_required, logout_user, current_user
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField, IntegerField, DateTimeField
+from wtforms.validators import Required
 from functools import wraps
 from server import get_app, get_db
 #from model import User

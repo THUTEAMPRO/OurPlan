@@ -4,5 +4,6 @@
 from common.util import import_all_modules
 import api_example
 import login
+import task
 import auth
 

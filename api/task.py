@@ -6,27 +6,76 @@ from util import *
 from model import Task
 
 class AddTaskForm(Form):
-    date = DateTimeField('Date')
-    time = DateTimeField('Time')
-    info = StringField("String")
-    title = StringField("String")
+    date = DateTimeField('Date', format="%Y-%m-%d", validators=[Required()])
+    time = DateTimeField('Time', format="%H:%M:%S", validators=[Required()])
+    info = StringField("Info")
+    title = StringField("Title")
 
 @api_impl("/add_task",methods=["POST","GET"])
 @login_required
 def add_task(**kwargs):
-	return dict(dosth=321)
+    form = AddTaskForm(csrf_enabled=False);
+    if form.validate_on_submit():
+        task_tmp = Task(current_user.username,\
+                            form.date.data, form.time.data)
+        db.session.add(task_tmp)
+        db.session.commit()
+        return dict(success=1,id=task_tmp.id)
+    else:
+        return dict(fail=1)
+        
+class DelTaskForm(Form):
+    id = IntegerField("Info", validators=[Required()])
 
 @api_impl("/del_task",methods=["POST","GET"])
 @login_required
 def del_task(**kwargs):
-	return dict(dosth=321)
+    form = DelTaskForm(csrf_enabled=False);
+    if form.validate_on_submit():
+        task_tmp = Task.query.filter_by(id=form.id.data).first()
+        db.session.delete(task_tmp)
+        return dict(success=1)
+    else:
+        return dict(fail=1)
+    
+class UpdateTaskForm(Form):
+    id = IntegerField("Info", validators=[Required()])
+    date = DateTimeField('Date', format="%Y-%m-%d")
+    time = DateTimeField('Time', format="%H:%M:%S")
+    info = StringField("Info")
+    title = StringField("Title")
 
 @api_impl("/update_task",methods=["POST","GET"])
 @login_required
 def update_task(**kwargs):
-	return dict(dosth=321)
+    form = UpdateTaskForm(csrf_enabled=False);
+    if form.validate_on_submit():
+        task_tmp = Task.query.filter_by(id=form.id.data).first()
+        if(task_tmp is not None):
+            task_tmp.update(date=form.date.data,\
+                                time=form.time.data,\
+                                title=form.title.data,\
+                                info=form.info.data)
+            return dict(success=1)
+        else:
+            return dict(fail=2)
+    else:
+        return dict(fail=1)
+    return dict(dosth=321)
 
-@api_impl("/read_task",methods=["POST","GET"])
+@api_impl("/get_task",methods=["POST","GET"])
 @login_required
-def read_task(**kwargs):
-	return dict(dosth=321)
+def get_task(**kwargs):
+    return map(lambda t:t.get_dict(), Task.query.filter_by(username=current_user.username).all())
+
+
+"""
+@app.route("/task_test", methods=["POST","GET"])
+def task_test():
+    form = AddTaskForm();
+    if form.validate_on_submit():
+        print "yes"
+        return render_template("task.html",form=form)
+    else:
+        return render_template("task.html",form=form)
+"""

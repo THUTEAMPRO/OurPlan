@@ -10,15 +10,37 @@ class Task(_db.Model):
     __tablename__ = 'tasks'
     id = _db.Column(_db.Integer, primary_key=True)
     username = _db.Column(_db.String(128), index=True)
-    info = _db.Column(_db.String(128), index=True)
     time = _db.Column(_db.Time, index=True)
     date = _db.Column(_db.Date, index=True)
-    datetime = _db.Column(_db.DateTime, index=True)
+    title = _db.Column(_db.String(128),index=True)
+    info = _db.Column(_db.String(128), index=True)
 
-    def __init__(self, username, date, time):
+    def __init__(self, username, date, time, title="untitled", info=""):
         self.username = username
+        self.time=time.time()
+        self.date=date.date()
+        self.title=title
+        self.info=info
+
+    def update(self, date=None, time=None, title=None, info=None):
+        if date is not None:
+            self.date=date.date()
+        if time is not None:
+            self.time=time.time()
+        if title is not None:
+            self.title=title
+        if info is not None:
+            self.info=info
 
     # role_id = _db.Column(_db.Integer, _db.ForeignKey('roles.id'))
 
     def __repr__(self):
         return '<Task %r>' % self.username
+
+    def get_dict(self):
+        return dict(id=self.id,\
+            username=self.username,\
+            time=self.time.strftime("%H:%M:%S"),\
+            date=self.time.strftime("%Y-%m-%d"),\
+            title=self.title,\
+            info=self.info)

@@ -34,6 +34,9 @@ class User(_db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def get_dict(self):
+        return dict(username=self.username)
+
         
     
     def is_authenticated(self):

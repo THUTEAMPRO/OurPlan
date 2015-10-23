@@ -15,12 +15,12 @@ class Task(_db.Model):
     title = _db.Column(_db.String(128),index=True)
     info = _db.Column(_db.String(128), index=True)
 
-    def __init__(self, username, date, time, title="untitled", info=""):
+    def __init__(self, username, date, time, title, info):
         self.username = username
         self.time=time.time()
         self.date=date.date()
-        self.title=title
-        self.info=info
+        self.title=[title, "untitled"][title is None]
+        self.info=[info, ""][info is None]
 
     def update(self, date=None, time=None, title=None, info=None):
         if date is not None:
@@ -38,9 +38,10 @@ class Task(_db.Model):
         return '<Task %r>' % self.username
 
     def get_dict(self):
+        date=self.date
         return dict(id=self.id,\
             username=self.username,\
             time=self.time.strftime("%H:%M:%S"),\
-            date=self.time.strftime("%Y-%m-%d"),\
+            date="-".join(map(str,[date.year,date.month,date.day])),\
             title=self.title,\
             info=self.info)

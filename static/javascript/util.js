@@ -1,5 +1,5 @@
 // dependency underscore
-(function(env){
+(function(){
     var gUtil=gUtil||{};
     var Class=gUtil.Class=function(){
         this._id=_.uniqueId();

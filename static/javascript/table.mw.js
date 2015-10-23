@@ -10,6 +10,7 @@ function DateClass(_container) {
         
         this.showWeekTable = function(_year, _month, _date, _day) {
              this.container.innerHTML = this.getWeekTable(_year, _month,_date,_day);
+            week_bind_task();
         }
 
         this.getWeekTable = function(_year, _month,_date,_day) {	
@@ -52,8 +53,11 @@ function DateClass(_container) {
         	this.Tbody = ' ';
         	 for (var i = 0; i < 24; i++) {
         	 	this.Tbody += '<tr> <td align="right" class="WeekTd">'+i+':00</td>'
+                 var data_hour=i;
         	 	for (var j = 0; j < this.weekArr.length; j++) {
-        	 		this.Tbody += '<td class="out"></td>'
+                    var data_date=this.checkDate(_year, _month+1, eval(first_date_of_week+j), j);
+                    var newDiv='<div class="task" data-hour='+data_hour+' data-date='+data_date+'></div>';
+        	 		this.Tbody += '<td class="out">'+newDiv+'</td>'
         	 	}
         	 	this.Tbody += '</tr>';
         	 }
@@ -66,6 +70,7 @@ function DateClass(_container) {
 
 	this.showMonthTable = function(_year, _month,_date,_day) {
              this.container.innerHTML = this.getMonthTable(_year, _month,_date,_day);
+        month_bind_task();
              
         }
 
@@ -103,10 +108,11 @@ function DateClass(_container) {
                           if (i!=1 && i%7==0) this.Tbody += '</tr>\n' + this.tableRowText;
                       } else {
                           if ((i+this.firstPos(_year, _month))%7==1) this.Tbody += '</tr>\n' + this.tableRowText;                      }
+                     var newDiv='<div class="task" data-date='+this.checkDate(_year, _month+1, i)+'></div>';
                      	   if (!this.today(_year, _month, i)) {
-                          	this.Tbody += '<td align="left" class="out"  onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + '</td>';
+                          	this.Tbody += '<td align="left" class="out"  onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + newDiv + '</td>';
                      	  } else {
-                         	this.Tbody += '<td align="left" class="Today" onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + '</td>'; 
+                         	this.Tbody += '<td align="left" class="Today" onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + newDiv + '</td>'; 
                          } 
                  }
                  for (var i=0; i<6-this.lastPos(_year, _month); i++) this.Tbody += '<td class="BlankTd"></td>';
@@ -175,6 +181,9 @@ function DateClass(_container) {
          this.showTimeStr = function(_year, _month, _date, _week) {
               window.alert('准备添加日程'); 
          }
+    this.showDateStr=function(_year, _month, _date, _week){
+        console.log("showDateStr...do nothing");
+    }
 }
    
     window.onload = function() {

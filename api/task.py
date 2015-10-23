@@ -16,8 +16,11 @@ class AddTaskForm(Form):
 def add_task(**kwargs):
     form = AddTaskForm(csrf_enabled=False);
     if form.validate_on_submit():
-        task_tmp = Task(current_user.username,\
-                            form.date.data, form.time.data)
+        print form.date.data.date()
+        print form.time.data.time()
+        task_tmp = Task(username=current_user.username,\
+                            date=form.date.data, time=form.time.data,\
+                            title=form.title.data, info=form.info.data)
         db.session.add(task_tmp)
         db.session.commit()
         return dict(success=1,id=task_tmp.id)
@@ -61,12 +64,11 @@ def update_task(**kwargs):
             return dict(fail=2)
     else:
         return dict(fail=1)
-    return dict(dosth=321)
 
 @api_impl("/get_task",methods=["POST","GET"])
 @login_required
 def get_task(**kwargs):
-    return map(lambda t:t.get_dict(), Task.query.filter_by(username=current_user.username).all())
+    return dict(map(lambda t:(t.id,t.get_dict()), Task.query.filter_by(username=current_user.username).all()))
 
 
 """

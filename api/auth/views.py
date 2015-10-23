@@ -73,6 +73,7 @@ def register():
             user_tmp.password=password
             db.session.add(user_tmp)
             db.session.commit()
+            login_user(user_tmp)
             session['known'] = False
         else:
             session['known'] = True

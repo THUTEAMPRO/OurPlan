@@ -1,9 +1,34 @@
+var week_util={
+    templateHTML:
+    '<div>'+
+        '<div><label>title:</label><input value="<%=title%>"></input></div>'+
+        '<div><label>info:</label><textarea><%=info%></textarea></div>'+
+        '<div class="data" <%=data%>><%=button%></div>'+
+    '</div>',
+    template:function(date,hour,title,info,tid){
+        var button="";
+        var data="";
+        if(tid){
+            data='data-hour='+hour+' data-date='+date+' data-id='+tid;
+            button='<button class="del">del</button>'+'<button class="update">update</button>';
+        }else{
+            data='data-hour='+hour+' data-date='+date;
+            button='<button class="add">add</button>';
+        }
+        return _.template(week_util.templateHTML)({
+            title:title,
+            info:info,
+            data:data,
+            button:button
+        });
+    }
+}
 var week_bind_task=function(){
     $(".task").html("");
     for(var id in task_data){
         var task=task_data[id];
         var hour=eval(task.time.split(":")[0]);
-        var selector="div[data-date="+task.date+"][data-hour="+hour+"]";
+        var selector="div.task.week[data-date="+task.date+"][data-hour="+hour+"]";
         var label="<label data-id="+id+">"+task.title+"</label>"
         $(selector).html(label);
     }
@@ -14,23 +39,10 @@ var week_bind_task=function(){
         var data_date=$tdout.find("div").attr("data-date");
         if(tid){
             var task=task_data[tid];
-            var titleInput='<input value='+task.title+'></input>';
-            var infoInput='<textarea>'+task.info+'</textarea>';
-            var divLeft='<div class="data" data-hour='+data_hour+
-                ' data-date='+data_date+' data-id='+tid+">";
-            var delButton='<button class="del">del</button>';
-            var updateButton='<button class="update">update</button>';
-            overlib(infoInput+divLeft+delButton+updateButton+"</div>",
-                    STICKY,CAPTION,titleInput);
+            overlib(week_util.template(data_date,data_hour,task.title,task.info,task.id),STICKY);
             week_bind_button();
         }else{
-            var titleInput='<input></input>';
-            var infoInput='<textarea></textarea>';
-            var divLeft='<div class="data" data-hour='+data_hour+
-                ' data-date='+data_date+' data-id='+tid+">";
-            var addButton='<button class="add">add</button>';
-            overlib(infoInput+divLeft+addButton+"</div>",
-                    STICKY,CAPTION,titleInput);
+            overlib(week_util.template(data_date,data_hour),STICKY);
             week_bind_button();
         }
     });
@@ -91,7 +103,7 @@ var week_bind_button=function(){
                     date:date,
                     time:hour+":00:00",
                     info:info,
-                    title:title,
+                    title:data.title,
                 }
                 week_bind_task();
             }
@@ -99,16 +111,6 @@ var week_bind_button=function(){
         nd();
         nd();
     });
-}
-var month_bind_task=function(){
-    $(".task").html("");
-    for(var id in task_data){
-        var task=task_data[id];
-        var hour=eval(task.time.split(":")[0]);
-        var selector="div[data-date="+task.date+"]";
-        var label="<label data-id="+id+">"+task.title+"</label><br/>";
-        $(selector).append(label);
-    }
 }
 $(document).ready(function(){
     $(document).keydown(function(e){

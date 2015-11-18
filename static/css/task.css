@@ -1,0 +1,9 @@
+div#overDiv label{
+    vertical-align:middle;
+}
+div.task.month label:hover{
+    color:#777777;
+}
+div.task.month label{
+    color:#000000;
+}

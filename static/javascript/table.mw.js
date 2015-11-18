@@ -56,7 +56,7 @@ function DateClass(_container) {
                  var data_hour=i;
         	 	for (var j = 0; j < this.weekArr.length; j++) {
                     var data_date=this.checkDate(_year, _month+1, eval(first_date_of_week+j), j);
-                    var newDiv='<div class="task" data-hour='+data_hour+' data-date='+data_date+'></div>';
+                    var newDiv='<div class="week task" data-hour='+data_hour+' data-date='+data_date+'></div>';
         	 		this.Tbody += '<td class="out">'+newDiv+'</td>'
         	 	}
         	 	this.Tbody += '</tr>';
@@ -108,7 +108,7 @@ function DateClass(_container) {
                           if (i!=1 && i%7==0) this.Tbody += '</tr>\n' + this.tableRowText;
                       } else {
                           if ((i+this.firstPos(_year, _month))%7==1) this.Tbody += '</tr>\n' + this.tableRowText;                      }
-                     var newDiv='<div class="task" data-date='+this.checkDate(_year, _month+1, i)+'></div>';
+                     var newDiv='<div class="month task" data-date='+this.checkDate(_year, _month+1, i)+'></div>';
                      	   if (!this.today(_year, _month, i)) {
                           	this.Tbody += '<td align="left" class="out"  onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + newDiv + '</td>';
                      	  } else {

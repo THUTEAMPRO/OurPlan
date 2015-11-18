@@ -19,7 +19,7 @@ class Task(_db.Model):
         self.username = username
         self.time=time.time()
         self.date=date.date()
-        self.title=[title, "untitled"][title is None]
+        self.title=[title, "untitled"][(title is None) or (title=="")]
         self.info=[info, ""][info is None]
 
     def update(self, date=None, time=None, title=None, info=None):

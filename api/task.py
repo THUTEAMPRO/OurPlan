@@ -23,7 +23,7 @@ def add_task(**kwargs):
                             title=form.title.data, info=form.info.data)
         db.session.add(task_tmp)
         db.session.commit()
-        return dict(success=1,id=task_tmp.id)
+        return dict(success=1,id=task_tmp.id,title=task_tmp.title)
     else:
         return dict(fail=1)
         

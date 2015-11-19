@@ -1,36 +1,33 @@
 {% extends "base.html" %}
+{% block title %} Group {% endblock %}
+
 {% block page_content %}
 
-<link rel="stylesheet" type="text/css" href="ourplan.css" />
+<link rel="stylesheet" type="text/css" href="/css/group.css" />
 <link rel="stylesheet" type="text/css" href="/css/task.css" />
 <script src="/javascript/jquery-1.8.3.min.js"></script>
 <script src="/javascript/overlib.js"></script>
-<script src="/javascript/task.js"></script>
-<script src="/javascript/monthtask.js"></script>
 <script src="/javascript/underscore.min.js"></script>
 <script>
-  var user_data={{user_data|tojson}};
-  var task_data={{task_data|tojson}};
 </script>
 
 
 <body>
 
 <div id="menu">
-	<h2>Menu</h2>
-	<ul>
-		<li>item 1</li>
-		<li>item 2</li>
-		<li>item 3</li>
-	</ul>
-	<h2>{{user_data.username}} 's Calendar</h2>
-	<form action="" method="get">
+	<h2>Group</h2>
+    <br/>
 	<ul id="group">
-		<li><label><input name="CalendarGroup" type="radio" value="" />个人 </label></li>
 		<li><label><input name="CalendarGroup" type="radio" value="" />组1 </label></li>
 		<li><label><input name="CalendarGroup" type="radio" value="" />组2 </label></li>
 	</ul>
-	</form>
+    
+	<h2>Add Group</h2>
+    <br/>
+	<ul>
+      <li><input id="newgroup" /></li>
+      <li><button>add</button></li>
+	</ul>
 </div>
 
 <div id="content">

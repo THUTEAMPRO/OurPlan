@@ -12,7 +12,11 @@ def home():
     if current_user.is_authenticated:
         user_data=current_user.get_dict()
         task_data=api.task.get_task()
-    return render_template("example.html", content="args example", user_data=user_data, task_data=task_data)
+    return render_template("example.html", user_data=user_data, task_data=task_data)
+
+@app.route("/group")
+def group():
+    return render_template("group.html");
 
 @app.route("/login")
 def _login():

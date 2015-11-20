@@ -14,6 +14,17 @@ class User(_db.Model):
     username = _db.Column(_db.String(128), unique=True, index=True)
     password_hash = _db.Column(_db.String(128), unique=True, index=True)
 
+    @staticmethod
+    def get_one(user):
+        if type(user)==str:
+            return User.query.filter_by(username=user).first()
+        elif type(user)==int:
+            return User.query.filter_by(id=user).first()
+        elif type(user)==User:
+            return user
+        else:
+            return None
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')

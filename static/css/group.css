@@ -19,6 +19,6 @@ ul {
 li {
     list-style:none;
 }
-input#newgroup{
+input#groupname{
     width:100px;
 }

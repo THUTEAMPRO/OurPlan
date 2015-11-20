@@ -16,7 +16,8 @@ def home():
 
 @app.route("/group")
 def group():
-    return render_template("group.html");
+    group_data=api.group.user_get_group()
+    return render_template("group.html", group_data=group_data);
 
 @app.route("/login")
 def _login():

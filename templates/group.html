@@ -7,8 +7,10 @@
 <link rel="stylesheet" type="text/css" href="/css/task.css" />
 <script src="/javascript/jquery-1.8.3.min.js"></script>
 <script src="/javascript/overlib.js"></script>
+<script src="/javascript/group.js"></script>
 <script src="/javascript/underscore.min.js"></script>
 <script>
+  var group_data={{group_data|tojson}};
 </script>
 
 
@@ -19,19 +21,19 @@
     <br/>
 	<ul id="group">
 		<li><label><input name="CalendarGroup" type="radio" value="" />组1 </label></li>
-		<li><label><input name="CalendarGroup" type="radio" value="" />组2 </label></li>
 	</ul>
     
 	<h2>Add Group</h2>
     <br/>
 	<ul>
-      <li><input id="newgroup" /></li>
-      <li><button>add</button></li>
+      <li><input id="groupname" /></li>
+      <li><button id="addgroup">add</button></li>
 	</ul>
 </div>
 
 <div id="content">
-	<div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 
+  <div id="groupmember"></div>
+  <div id="groupcontent"></div>
 
 </div>
 

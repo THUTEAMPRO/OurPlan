@@ -6,4 +6,5 @@ import api_example
 import login
 import task
 import auth
+import group
 

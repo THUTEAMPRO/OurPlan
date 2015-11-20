@@ -6,11 +6,26 @@
 <script src="/javascript/jquery-1.8.3.min.js"></script>
 <script src="/javascript/overlib.js"></script>
 <script src="/javascript/task.js"></script>
+<script src="/javascript/group_calendar.js"></script>
 <script src="/javascript/monthtask.js"></script>
 <script src="/javascript/underscore.min.js"></script>
 <script>
   var user_data={{user_data|tojson}};
+  var user_task_data={{task_data|tojson}};
+  
+  
+  var group_data={{group_data|tojson}};
+  var group_task_data={{group_task_data|tojson}};
+  
   var task_data={{task_data|tojson}};
+  
+  var selected_data={
+      groupid:undefined,
+      view_type:"week",
+      set task_data(val){
+      task_data=val
+      }
+  }
 </script>
 
 
@@ -27,8 +42,9 @@
 	<form action="" method="get">
 	<ul id="group">
 		<li><label><input name="CalendarGroup" type="radio" value="" />个人 </label></li>
-		<li><label><input name="CalendarGroup" type="radio" value="" />组1 </label></li>
-		<li><label><input name="CalendarGroup" type="radio" value="" />组2 </label></li>
+        {% for group in group_data%}
+		<li><label data-id="{{group.groupid}}"><input name="CalendarGroup" type="radio" value="" />{{group.groupname}}</label></li>
+        {% endfor %}
 	</ul>
 	</form>
 </div>

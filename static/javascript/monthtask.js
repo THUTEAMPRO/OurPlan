@@ -67,6 +67,7 @@ var month_util={
         }
     },
     bind_task:function(){
+        selected_data.view_type="month";
         $(".task").html("");
         for(var id in task_data){
             var task=task_data[id];
@@ -157,7 +158,8 @@ var month_util={
                        time:time,
                        date:date,
                        info:info,
-                       title:title
+                       title:title,
+                       groupid:selected_data.groupid
                    },
                    function(data){
                        if(data.fail){

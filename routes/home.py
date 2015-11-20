@@ -9,10 +9,17 @@ from util import *
 def home():
     user_data={}
     task_data=[]
+    group_data=[]
     if current_user.is_authenticated:
         user_data=current_user.get_dict()
         task_data=api.task.get_task()
-    return render_template("example.html", user_data=user_data, task_data=task_data)
+        group_data=api.group.user_get_group()
+        group_task_data={}
+        for group in group_data:
+            groupid=group["groupid"]
+            tasks=api.task.get_group_task(groupid=groupid)
+            group_task_data[groupid]=tasks
+    return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data)
 
 @app.route("/group")
 def group():

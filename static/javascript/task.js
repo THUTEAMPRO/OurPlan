@@ -24,6 +24,7 @@ var week_util={
     }
 }
 var week_bind_task=function(){
+    selected_data.view_type="week";
     $(".task").html("");
     for(var id in task_data){
         var task=task_data[id];
@@ -92,7 +93,8 @@ var week_bind_button=function(){
                    time:hour+":00:00",
                    date:date,
                    info:info,
-                   title:title
+                   title:title,
+                   groupid:selected_data.groupid
                },
                function(data){
             if(data.fail){

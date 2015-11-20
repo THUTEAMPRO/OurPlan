@@ -10,15 +10,17 @@ class AddTaskForm(Form):
     time = DateTimeField('Time', format="%H:%M:%S", validators=[Required()])
     info = StringField("Info")
     title = StringField("Title")
+    groupid = IntegerField("GroupId")
 
 @api_impl("/add_task",methods=["POST","GET"])
 @login_required
 def add_task(**kwargs):
     form = AddTaskForm(csrf_enabled=False);
     if form.validate_on_submit():
-        print form.date.data.date()
-        print form.time.data.time()
-        task_tmp = Task(username=current_user.username,\
+        task_username = current_user.username
+        if form.groupid.data is not None:
+            task_username = "_group_" + str(form.groupid.data)
+        task_tmp = Task(username=task_username,\
                             date=form.date.data, time=form.time.data,\
                             title=form.title.data, info=form.info.data)
         db.session.add(task_tmp)
@@ -69,6 +71,15 @@ def update_task(**kwargs):
 @login_required
 def get_task(**kwargs):
     return dict(map(lambda t:(t.id,t.get_dict()), Task.query.filter_by(username=current_user.username).all()))
+
+@api_impl("/get_group_task/<groupid>",methods=["POST","GET"])
+@login_required
+def get_group_task(**kwargs):
+    groupid=kwargs.get("groupid")
+    if(groupid is not None):
+        return dict(map(lambda t:(t.id,t.get_dict()), Task.query.filter_by(username="_group_"+str(groupid)).all()))
+    else:
+        return dict();
 
 
 """

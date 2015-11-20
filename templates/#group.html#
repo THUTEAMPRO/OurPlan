@@ -48,6 +48,9 @@
       <input id="finduser"></input>
     </ul>
     <ul id="userlist">
+      <li><h4>friend1</label>&nbsp;<button>+</button></li>
+      <li><label>friend2</label>&nbsp;<button>+</button></li>
+      <li><label>friend3</label>&nbsp;<button>+</button></li>
     </ul>
   </div>
 

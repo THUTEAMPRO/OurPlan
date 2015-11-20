@@ -5,6 +5,7 @@
 from user import User
 from task import Task
 from group import Group, GroupRelation
+from friend import Friend
 
 from server import get_db
 

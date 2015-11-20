@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block page_content %}
 
 <link rel="stylesheet" type="text/css" href="ourplan.css" />
@@ -9,6 +9,7 @@
 <script src="/javascript/group_calendar.js"></script>
 <script src="/javascript/monthtask.js"></script>
 <script src="/javascript/underscore.min.js"></script>
+
 <script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
 
 <script>
@@ -54,6 +55,7 @@
 findWeather();
 </script>
 <span id="weather"></span>
+
 
 <div id="content">
 	<div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 

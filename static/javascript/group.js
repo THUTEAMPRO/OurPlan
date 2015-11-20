@@ -38,8 +38,40 @@ var group_util={
                 console.log(groupname);
             }
         });
+    },
+}
+var friend_util={
+    friendTemplateHTML:"<li><h4>Username : <%=username%></h4>"+
+        "<h4>Email : <%=email%></h4></li>"+
+        '<a data-id="<%=id%>">Add</a>',
+    template:function(user){
+        return _.template(friend_util.friendTemplateHTML)(user);
+    },
+    doFind:function(){
+        $("ul#userlist").html("");
+        var userinfo=$("#finduser").val();
+        $.get("/api/find_user/"+userinfo,function(data){
+            _.each(data,function(user){
+                $("ul#userlist").append(friend_util.template(user));
+            });
+        });
+    },
+    bind:function(){
+        $("input#finduser").on("keypress",function(e){
+            if(e.keyCode=="13"){
+                friend_util.doFind();
+            }
+        });
+        $("ul#userlist").click(function(e){
+            var $a=$(e.target).closest("a");
+            var userid=$a.attr("data-id");
+            if($a.length==1){
+                console.log(userid);
+            }
+        });
     }
 }
 $(document).ready(function(){
     group_util.bind();
+    friend_util.bind();
 });

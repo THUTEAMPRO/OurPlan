@@ -7,4 +7,5 @@ import login
 import task
 import auth
 import group
+import friend
 

@@ -46,7 +46,9 @@ class User(_db.Model):
         return '<User %r>' % self.username
 
     def get_dict(self):
-        return dict(username=self.username)
+        return dict(id=self.id,\
+                    username=self.username,\
+                    email=self.email)
         
     
     def is_authenticated(self):

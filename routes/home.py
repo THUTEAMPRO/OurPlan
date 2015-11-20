@@ -27,6 +27,10 @@ def group():
     group_data=api.group.user_get_group()
     return render_template("group.html", group_data=group_data);
 
+@app.route("/user_edit")
+def user_edit():
+    return render_template("user_edit.html")
+
 @app.route("/login")
 def _login():
     return redirect('/auth/login')

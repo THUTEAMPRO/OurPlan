@@ -7,6 +7,22 @@ div#menu {
 div#footer {
     background-color:#eeeeee;clear:both;text-align:center;
 }
+div#content{
+    float:left;
+    width:80%;
+}
+div#groupmember{
+    float:left;
+    width:33%;
+}
+div#groupinfo{
+    float:left;
+    width:33%;
+}
+div#friend{
+    float:left;
+    width:33%;
+}
 h1 {
     margin-bottom:0;
 }

@@ -102,12 +102,14 @@ function DateClass(_container) {
                  
                  for (var i=0; i<this.firstPos(_year, _month); i++) 
                  	this.Tbody += '<td class="BlankTd"></td>';
-                 	
+                 
                  for (var i=1; i<=this.dateArr[_month]; i++) {
-                      if (this.firstPos(_year, _month) == 0) {
-                          if (i!=1 && i%7==0) this.Tbody += '</tr>\n' + this.tableRowText;
-                      } else {
-                          if ((i+this.firstPos(_year, _month))%7==1) this.Tbody += '</tr>\n' + this.tableRowText;                      }
+                     if (this.firstPos(_year, _month) == 0) {
+                          if (i!=1 && i%7==1) this.Tbody += '</tr>\n' + this.tableRowText;
+                      } else {                         if ((i+this.firstPos(_year, _month))%7==1) {
+                          this.Tbody += '</tr>\n' + this.tableRowText;    
+                             }                  
+                      }
                      var newDiv='<div class="month task" data-date='+this.checkDate(_year, _month+1, i)+'></div>';
                      	   if (!this.today(_year, _month, i)) {
                           	this.Tbody += '<td align="left" class="out"  onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + newDiv + '</td>';
@@ -115,7 +117,7 @@ function DateClass(_container) {
                          	this.Tbody += '<td align="left" class="Today" onclick="myTable.showDateStr(' + _year + ', ' + _month + ', ' + i + ', \'' + this.weekArr[new Date(_year, _month, i).getDay()] + '\');">' + i + newDiv + '</td>'; 
                          } 
                  }
-                 for (var i=0; i<6-this.lastPos(_year, _month); i++) this.Tbody += '<td class="BlankTd"></td>';
+                 for (var i=0; i<7-this.lastPos(_year, _month); i++) this.Tbody += '<td class="BlankTd"></td>';
                  this.Tbody += '</tr>\n'; 
                  this.TFoot = '</table>\n';
                  

@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block page_content %}
 {% import "bootstrap/wtf.html" as wtf %}
-<head>
-	<meta charset="utf-8">
-	<title>OurPlan日程管理系统是一个很好用的系统！</title>
 
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='register_fort.css') }}">
@@ -12,7 +9,7 @@
 	<script src="{{ url_for('static', filename='javascript/scripts.js') }}"></script>
 	<script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
 	<script src="{{ url_for('static', filename='javascript/jquery-1.8.3.min.js') }}"></script>
-</head>
+
 <body background="{{ url_for('static', filename='img/backgrounds/3.jpg') }}" onload="createCode()">
 	<div class="form-wrapper" >
 		<script type="text/javascript">
@@ -46,7 +43,7 @@
 		var code; //在全局 定义验证码  
 		function createCode() {
 			 code = "";
-			  var codeLength = 6;//验证码的长度  
+			  var codeLength = 4;//验证码的长度  
 			  var checkCode = document.getElementById("checkCode");
 			  var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');//所有候选组成验证码的字符，当然也可以用中文的  
 			  

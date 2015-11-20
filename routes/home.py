@@ -10,6 +10,7 @@ def home():
     user_data={}
     task_data=[]
     group_data=[]
+    group_task_data={}
     if current_user.is_authenticated:
         user_data=current_user.get_dict()
         task_data=api.task.get_task()

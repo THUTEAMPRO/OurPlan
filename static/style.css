@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font: 10pt;
     box-sizing: border-box;
 }
 
@@ -9,7 +10,7 @@ body {
     background-size:100%;
     background: #fff url(~/assets/img/backgrounds/4.jpg) repeat_x;
     color: #7b8993;
-    font: 300 87.5%/1.5em 'Open Sans', sans-serif;
+    font: 10pt, sans-serif;
 }
 
 .form-wrapper {
@@ -99,7 +100,6 @@ form {
     cursor: pointer;
     height: 50px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1.2em;
     letter-spacing: 0.05em;
     text-align: center;
     text-transform: uppercase;
@@ -141,7 +141,6 @@ and (max-width : 320px) {
     text-decoration: underline;
     color: #7b8993;
     padding-top: 8px;
-    font-size: 16px;
 }
 
 #ref:hover {
@@ -150,7 +149,6 @@ and (max-width : 320px) {
     text-decoration: underline;
     -webkit-animation: hue 60s infinite linear;
     padding-top: 8px;
-    font-size: 16px;
 }
 ul li{
 display: inline-block;

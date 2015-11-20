@@ -9,6 +9,8 @@
 <script src="/javascript/group_calendar.js"></script>
 <script src="/javascript/monthtask.js"></script>
 <script src="/javascript/underscore.min.js"></script>
+<script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
+
 <script>
   var user_data={{user_data|tojson}};
   var user_task_data={{task_data|tojson}};
@@ -48,6 +50,10 @@
 	</ul>
 	</form>
 </div>
+<script>
+findWeather();
+</script>
+<span id="weather"></span>
 
 <div id="content">
 	<div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 

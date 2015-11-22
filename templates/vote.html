@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Group {% endblock %}
+
+{% block page_content %}
+
+<link rel="stylesheet" type="text/css" href="/css/group.css" />
+<link rel="stylesheet" type="text/css" href="/css/task.css" />
+<script src="/javascript/jquery-1.8.3.min.js"></script>
+<script src="/javascript/overlib.js"></script>
+<script src="/javascript/group.js"></script>
+<script src="/javascript/underscore.min.js"></script>
+<script>
+  var group_data={{group_data|tojson}};
+</script>
+
+
+<body>
+
+<div id="menu">
+	<h2>Group</h2>
+    <br/>
+	<ul id="group">
+		<li><label><input name="CalendarGroup" type="radio" value="" />组1 </label></li>
+	</ul>
+    
+</div>
+
+<div id="content">
+
+</div>
+
+<!--- 
+<div id="wTableContainer"><script src="/javascript/table.week.js"></script></div> 
+	<div id="mTableContainer"><script src="/javascript/table.month.js"></script></div> 
+
+	<div id="wTableContainer">hahah 1</div> 
+	<div id="mTableContainer">hahah 2</div> 
+>
+<!--->
+
+</body>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+# -*- coding:utf-8 -*-
+# $File: login.py
+# $Author: cz <chenze-321n[at]163[dot]com>
+
+from util import *
+from model import UserTag, GroupTag
+from flask_login import current_user
+    
+"""
+"""
+
+@api_impl("/get_all_tag",methods=["POST","GET"])
+def get_all_tag(**kwargs):
+    userTags = UserTag.query.distinct(UserTag.tag).all();
+    return map(lambda t:t.tag, userTags);
+
+
+
+"""
+    group_tag operation
+"""
+
+@api_impl("/group_get_tag/<int:groupid>",methods=["POST","GET"])
+def group_get_tag(**kwargs):
+    groupid = kwargs["groupid"]
+    allTags = GroupTag.query.filter_by(groupid=groupid).all();
+    return map(lambda t:t.tag, allTags)
+
+@api_impl("/group_add_tag/<int:groupid>/<string:tag>",methods=["POST","GET"])
+def group_add_tag(**kwargs):
+    groupid = kwargs["groupid"]
+    tag = kwargs["tag"]
+    return dict();
+
+@api_impl("/group_del_tag/<int:groupid>/<string:tag>",methods=["POST","GET"])
+def group_del_tag(**kwargs):
+    return dict();
+
+
+
+
+"""
+    user_tag operation
+"""
+
+
+@api_impl("/user_get_tag",methods=["POST","GET"])
+@login_required
+def user_get_tag(**kwargs):
+    allTags = UserTag.query.filter_by(userid=current_user.id).all();
+    return map(lambda t:t.tag,allTags)
+
+@api_impl("/user_add_tag/<string:tag>",methods=["POST","GET"])
+@login_required
+def user_add_tag(**kwargs):
+    tag=kwargs["tag"]
+    if tag in user_get_tag():
+        return dict(fail=1)
+    else:
+        userTag = UserTag(current_user.id,kwargs["tag"])
+        db.session.add(userTag)
+        return dict(success=1);
+
+@api_impl("/user_del_tag/<string:tag>",methods=["POST","GET"])
+@login_required
+def user_del_tag(**kwargs):
+    tag=kwargs["tag"]
+    userTag = UserTag.query.filter_by(userid=current_user.id,tag=tag).first();
+    ifr
+    for t i allTags:
+        if t.tag==tag:
+            db.session.delete(t)
+            return dict(success=1);
+    return dict(fail=1)

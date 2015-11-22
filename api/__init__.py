@@ -8,4 +8,4 @@ import task
 import auth
 import group
 import friend
-
+import tag

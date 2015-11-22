@@ -31,6 +31,19 @@ def group():
 def user_edit():
     return render_template("user_edit.html")
 
+@app.route("/vote")
+def vote():
+    group_data=api.group.user_get_group()
+    return render_template("vote.html", group_data=group_data);
+
+@app.route("/discover")
+def discover():
+    return render_template("discover.html");
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html");
+
 @app.route("/login")
 def _login():
     return redirect('/auth/login')

@@ -4,7 +4,7 @@
 
 
 from server import get_db
-import user
+from user import User
 
 POWER_CREATER=1
 POWER_MENBER=0
@@ -40,17 +40,26 @@ class Group(_db.Model):
             if relation.power!=POWER_MEMBER:
                 _db.session.delete(relation)
                 
+    def get_member(self):
+        relations = GroupRelation.query.filter_by(groupid=self.id).all()
+        users = map(lambda r:User.query.filter_by(id=r.userid).first(), relations)
+        userJson= []
+        for u in users:
+            if(u is not None):
+                userJson.append(dict(username=u.username,userid=u.id))
+        return userJson
+                
     def get_dict(self):
         relations = GroupRelation.query.filter_by(groupid=self.id).all()
         users = map(lambda r:User.query.filter_by(id=r.userid).first(), relations)
-        usernames = []
+        userJson= []
         for u in users:
             if(u is not None):
-                usernames.append(u.username)
+                userJson.append(dict(username=u.username,userid=u.id))
         return dict(id=self.id,\
                         createrid=self.createrid,\
                         groupname=self.groupname,\
-                        members=usernames)
+                        members=userJson)
     @staticmethod
     def get_one(group):
         if type(group)==int:
@@ -60,6 +69,19 @@ class Group(_db.Model):
         else:
             return None
 
+class GroupTag(_db.Model):
+    __tablename__ = 'group_tag'
+    id = _db.Column(_db.Integer, primary_key=True)
+    groupid = _db.Column(_db.Integer, index=True)
+    groupname = _db.Column(_db.String(128))
+    tag = _db.Column(_db.String(128), index=True)
+
+    def __init__(self, groupid, tag):
+        group = Group.get_one(groupid);
+        self.tag = tag;
+        self.groupid = group.id;
+        self.groupname = group.groupname;
+
 
 
     
@@ -67,13 +89,16 @@ class GroupRelation(_db.Model):
     __tablename__ = 'user_group'
     id = _db.Column(_db.Integer, primary_key=True)
     userid = _db.Column(_db.Integer, index=True)
+    username = _db.Column(_db.String(128))
     groupid = _db.Column(_db.Integer, index=True)
     groupname = _db.Column(_db.String(128))
     power = _db.Column(_db.Integer)
 
     def __init__(self, userid, groupid, power):
         group = Group.get_one(groupid);
-        self.userid = userid
+        user = User.get_one(userid)
+        self.userid = user.id
+        self.username = user.username
         self.groupid = group.id
         self.groupname = group.groupname
         self.power = power;

@@ -6,8 +6,12 @@
 from server import get_db
 from user import User
 
+POWER_MEMBER=0
 POWER_CREATER=1
-POWER_MENBER=0
+
+GROUP_JOIN_INVITE=1
+GROUP_JOIN_ALLOW=2
+GROUP_JOIN_FREE=3
 
 _db=get_db()
 class Group(_db.Model):
@@ -15,9 +19,11 @@ class Group(_db.Model):
     id = _db.Column(_db.Integer, primary_key=True)
     groupname = _db.Column(_db.String(128), index=True)
     createrid = _db.Column(_db.Integer)
+    jointype = _db.Column(_db.Integer)
     def __init__(self,userid,groupname):
         self.createrid = userid
         self.groupname = groupname
+        self.jointype = GROUP_JOIN_FREE
         
     def __repr__(self):
         return '<Group %r>' % self.groupname
@@ -25,6 +31,7 @@ class Group(_db.Model):
     def bind(self):
         relation = GroupRelation(self.createrid,self.id,POWER_CREATER)
         _db.session.add(relation)
+        _db.session.commit()
 
     def add_member(self, userid):
         relation = GroupRelation.query.filter_by(groupid=self.id,userid=userid).first()
@@ -33,12 +40,39 @@ class Group(_db.Model):
         else:
             relation = GroupRelation(userid, self.id, POWER_MEMBER)
             _db.session.add(relation)
+            _db.session.commit()
+            
+    def del_tag(self, tag):
+        groupTag = GroupTag.query.filter_by(groupid=self.id,tag=tag).first()
+        if(groupTag is not None):
+            _db.session.delete(groupTag)
+            _db.session.commit()
+        else:
+            return ;
+        
+    def get_tag(self):
+        groupTags = GroupTag.query.filter_by(groupid=self.id).all()
+        if groupTags is not None:
+            return map(lambda t:t.tag,groupTags);
+        else:
+            return []
+    
+    def add_tag(self, tag):
+        groupTag = GroupTag.query.filter_by(groupid=self.id,tag=tag).first()
+        if(groupTag is not None):
+            return ;
+        else:
+            groupTag = GroupTag(self.id,tag);
+            _db.session.add(groupTag)
+            _db.session.commit()
+            return ;
 
     def del_member(self, userid):
         relation = GroupRelation.query.filter_by(groupid=self.id,userid=userid).first()
         if(relation is not None):
-            if relation.power!=POWER_MEMBER:
+            if relation.power!=POWER_CREATER:
                 _db.session.delete(relation)
+                _db.session.commit()
                 
     def get_member(self):
         relations = GroupRelation.query.filter_by(groupid=self.id).all()
@@ -59,6 +93,8 @@ class Group(_db.Model):
         return dict(id=self.id,\
                         createrid=self.createrid,\
                         groupname=self.groupname,\
+                        jointype=self.jointype,\
+                        tag=self.get_tag(),
                         members=userJson)
     @staticmethod
     def get_one(group):
@@ -69,6 +105,10 @@ class Group(_db.Model):
         else:
             return None
 
+
+
+
+        
 class GroupTag(_db.Model):
     __tablename__ = 'group_tag'
     id = _db.Column(_db.Integer, primary_key=True)

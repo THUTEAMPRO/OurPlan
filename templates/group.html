@@ -11,44 +11,93 @@
 <script src="/javascript/underscore.min.js"></script>
 <script>
   var group_data={{group_data|tojson}};
+  var group_each_data={};
+  var selected_data={
+  groupid:undefined
+  }
 </script>
 
 
 <body>
 
 <div id="menu">
-	<h2>Group</h2>
-    <br/>
-	<ul id="group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+	  <h2 class="panel-title">Group</h2>
+    </div>
+    <div class="panel-body">
+	  <ul id="group">
 		<li><label><input name="CalendarGroup" type="radio" value="" />组1 </label></li>
-	</ul>
+	  </ul>
+    </div>
+  </div>
     
-	<h2>Add Group</h2>
-    <br/>
-	<ul>
-      <li><input id="groupname" /></li>
-      <li><button id="addgroup">add</button></li>
-	</ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+	  <h2>Add Group</h2>
+    </div>
+    <div class="panel-body">
+      <input id="groupname" />
+      <button class="btn-default" id="addgroup">Add</button>
+    </div>
+  </div>
 </div>
 
+<!------------------------------------------------------------->
 <div id="content">
-  <div id="groupmember">
-    <h2>Group Member</h2>
-    <br/>
-    <ul>
-      <li><label>name1</label>&nbsp;<button>-</button></li>
-      <li><label>name2</label>&nbsp;<button>-</button></li>
-      <li><label>name3</label>&nbsp;<button>-</button></li>
-    </ul>
-  </div>
-  <div id="friend">
-    <h2>User Search:</h2>
-    <br/>
-    <ul>
-      <input id="finduser"></input>
-    </ul>
-    <ul id="userlist">
-    </ul>
+  <ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+      <a data-toggle="tab" href="#property">Property</a>
+    </li>
+    <li>
+      <a data-toggle="tab" href="#member">Member</a>
+    </li>
+  </ul>
+  <!--------------------------------------->
+  <!--------------------------------------->
+  <!--------------------------------------->
+  <!--------------------------------------->
+  <div id="myTabContent" class="tab-content">
+    <!--------------------------------------->
+    <div class="tab-pane fade in active" id="property">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Group Tag</h2>
+        </div>
+        <div class="panel-body">
+          <div id="grouptag">
+            <button type="button" class="btn btn-info">fds</button>
+            <button type="button" class="btn btn-info">rew</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--------------------------------------->
+    <div class="tab-pane fade" id="member">
+      <div id="groupmember" class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Group Member</h2>
+        </div>
+        <div class="panel-body">
+          <ul id="memberlist">
+          </ul>
+        </div>
+      </div>
+      <div id="friend" class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">User Search:</h2>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <input id="finduser"></input>
+          </ul>
+          <ul id="userlist">
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--------------------------------------->
+    <!--------------------------------------->
   </div>
 
 </div>

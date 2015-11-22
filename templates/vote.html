@@ -7,27 +7,80 @@
 <link rel="stylesheet" type="text/css" href="/css/task.css" />
 <script src="/javascript/jquery-1.8.3.min.js"></script>
 <script src="/javascript/overlib.js"></script>
-<script src="/javascript/group.js"></script>
+<script src="/javascript/vote.js"></script>
 <script src="/javascript/underscore.min.js"></script>
 <script>
   var group_data={{group_data|tojson}};
+  var selected_data={
+  groupid:undefined
+  }
 </script>
-
 
 <body>
 
-<div id="menu">
-	<h2>Group</h2>
-    <br/>
-	<ul id="group">
-		<li><label><input name="CalendarGroup" type="radio" value="" />组1 </label></li>
-	</ul>
-    
-</div>
+<!---------------------------------------------------------->
+  <ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+      <a data-toggle="tab" href="#dovote">Vote</a>
+    </li>
+    <li>
+      <a data-toggle="tab" href="#addvote">Add Vote</a>
+    </li>
+  </ul>
+<!---------------------------------------------------------->
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="dovote">
+      fdsfsd
+    </div>
+<!------------------------------------------------>
+    <div class="tab-pane fade" id="addvote">
+      <!-------------------------->
+    <div id="menu">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Group</h2>
+        </div>
+        <div class="list-group">
+          <ul id="group">
+            {% for group in group_data%}
+            <li>
+              <label data-groupid="{{group.groupid}}" data-groupname="{{group.groupname}}">
+                <input class="groupselect" name="groupselect" type="radio"/>
+                {{group.groupname}}
+              </label>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
 
-<div id="content">
 
-</div>
+    </div>
+      <!-------------------------->
+    <div id="content">
+      <!--------------------->
+      <div id="vote" class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Dosth</h2>
+        </div>
+        <div class="list-group">
+          <a href="#" class="list-group-item">
+            option1
+          </a>
+          <a href="#" class="list-group-item">
+            option2
+          </a>
+          <a href="#" class="list-group-item">
+            +
+          </a>
+        </div>
+      </div>
+      <!--------------------->
+    </div>
+      <!-------------------------->
+<!------------------------------------------------>
+  </div>
+<!---------------------------------------------------------->
 
 <!--- 
 <div id="wTableContainer"><script src="/javascript/table.week.js"></script></div> 

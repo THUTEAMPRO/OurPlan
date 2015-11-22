@@ -34,16 +34,60 @@ var group_util={
             var $input=$(e.target).closest("input[name=groupselect]");
             if($input.length==1){
                 var $label=$input.closest("label");
-                var groupname=$label.attr("data-groupname")
-                console.log(groupname);
+                var groupname=$label.attr("data-groupname");
+                var groupid=$label.attr("data-groupid");
+                selected_data.groupid=groupid;
+                $.get("/api/group_get_member/"+groupid,function(data){
+                    group_member_util.render(data);
+                });
             }
         });
     },
 }
+var group_member_util={
+    listTemplateHTML:"<li><h4><%=username%>&nbsp;&nbsp&nbsp"+
+        '<a class="delmember" data-id="<%=userid%>">Del</a></h4></li>',
+    bind:function(){
+        $("ul#memberlist").click(function(e){
+            var groupid=selected_data.groupid;
+            if(!groupid){
+                return ;
+            }
+            var $a=$(e.target).closest("a.delmember");
+            if($a.length==1){
+                var userid=$a.attr("data-id");
+                $.get("/api/group_del_member/"+groupid+"/"+userid,function(data){
+                    if(data.fail){
+                        console.log("del fail");
+                    }else{
+                        group_member_util.delRender({
+                            userid:userid
+                        });
+                    }
+                });
+            }
+        });
+    },
+    render:function(data){
+        $("ul#memberlist").html("");
+        _.each(data,function(user){
+            var html=_.template(group_member_util.listTemplateHTML)(user);
+            $("ul#memberlist").append(html);
+        });
+    },
+    addRender:function(user){
+        var html=_.template(group_member_util.listTemplateHTML)(user);
+        $("ul#memberlist").append(html);
+    },
+    delRender:function(user){
+        $("ul#memberlist a[data-id="+user.userid+"]").closest("li").remove();
+    }
+}
 var friend_util={
     friendTemplateHTML:"<li><h4>Username : <%=username%></h4>"+
         "<h4>Email : <%=email%></h4></li>"+
-        '<a data-id="<%=id%>">Add</a>',
+        '<a class="adduser" data-id="<%=id%>" data-name="<%=username%>">Add</a>',
+    emptyHTML:"<li>...</li>",
     template:function(user){
         return _.template(friend_util.friendTemplateHTML)(user);
     },
@@ -54,7 +98,9 @@ var friend_util={
             _.each(data,function(user){
                 $("ul#userlist").append(friend_util.template(user));
             });
+            $("ul#userlist").append(friend_util.emptyHTML);
         });
+        
     },
     bind:function(){
         $("input#finduser").on("keypress",function(e){
@@ -63,10 +109,24 @@ var friend_util={
             }
         });
         $("ul#userlist").click(function(e){
-            var $a=$(e.target).closest("a");
-            var userid=$a.attr("data-id");
+            var groupid=selected_data.groupid;
+            if(!groupid){
+                return ;
+            }
+            var $a=$(e.target).closest("a.adduser");
             if($a.length==1){
-                console.log(userid);
+                var userid=$a.attr("data-id");
+                var username=$a.attr("data-name");
+                $.get("/api/group_add_member/"+groupid+"/"+userid,function(data){
+                    if(data.fail){
+                        console.log("add fail");
+                    }else{
+                        group_member_util.addRender({
+                            userid:userid,
+                            username:username
+                        });
+                    }
+                });
             }
         });
     }
@@ -74,4 +134,5 @@ var friend_util={
 $(document).ready(function(){
     group_util.bind();
     friend_util.bind();
+    group_member_util.bind();
 });

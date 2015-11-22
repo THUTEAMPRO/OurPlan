@@ -51,3 +51,7 @@ def _login():
 @app.route("/register")
 def _register():
     return redirect('/auth/register')
+
+@app.route("/picker")
+def picker():
+    return render_template("picker.html");

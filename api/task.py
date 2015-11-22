@@ -72,7 +72,7 @@ def update_task(**kwargs):
 def get_task(**kwargs):
     return dict(map(lambda t:(t.id,t.get_dict()), Task.query.filter_by(username=current_user.username).all()))
 
-@api_impl("/get_group_task/<groupid>",methods=["POST","GET"])
+@api_impl("/get_group_task/<int:groupid>",methods=["POST","GET"])
 @login_required
 def get_group_task(**kwargs):
     groupid=kwargs.get("groupid")

@@ -47,6 +47,16 @@ def add_group(**kwargs):
  member operation
 """
 
+@api_impl("/group_get_property/<int:groupid>",methods=["POST","GET"])
+@login_required
+def group_get_property(**kwargs):
+    groupid = kwargs["groupid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        return group.get_dict()
+    else:
+        return dict();
+
 @api_impl("/group_get_member/<int:groupid>",methods=["POST","GET"])
 @login_required
 def group_get_member(**kwargs):

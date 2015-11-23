@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Group {% endblock %}
+{% block title %} Vote {% endblock %}
 
 {% block page_content %}
 
@@ -7,8 +7,14 @@
 <link rel="stylesheet" type="text/css" href="/css/task.css" />
 <script src="/javascript/jquery-1.8.3.min.js"></script>
 <script src="/javascript/overlib.js"></script>
-<script src="/javascript/vote.js"></script>
+<script src="/javascript/vote.js" charset="UTF-8"></script>
 <script src="/javascript/underscore.min.js"></script>
+
+<!--------------------------------->
+<link href="/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<!--------------------------------->
 <script>
   var group_data={{group_data|tojson}};
   var selected_data={
@@ -61,18 +67,35 @@
       <!--------------------->
       <div id="vote" class="panel panel-default">
         <div class="panel-heading">
-          <h2 class="panel-title">Dosth</h2>
+          <div class="input-group">
+            <span class="input-group-addon">
+              标题:
+            </span>
+            <input type="text" class="form-control">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">
+              内容:
+            </span>
+            <input type="text" class="form-control">
+          </div>
         </div>
-        <div class="list-group">
-          <a href="#" class="list-group-item">
-            option1
+        <div id="optionlist" class="list-group">
+          <a id="option1" href="#" class="list-group-item">
+            <div class="input-group date form_datetime">
+              <span class="input-group-addon">1</span>
+              <input class="form-control" size="10" type="text" value="" readonly>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+			  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
           </a>
-          <a href="#" class="list-group-item">
-            option2
-          </a>
-          <a href="#" class="list-group-item">
-            +
-          </a>
+        </div>
+        <div>
+          <p>
+            <button id="addoption" type="button" class="btn btn-block">
+              添加日期选项
+            </button>
+          </p>
         </div>
       </div>
       <!--------------------->
@@ -81,6 +104,18 @@
 <!------------------------------------------------>
   </div>
 <!---------------------------------------------------------->
+<script>
+    $('.form_datetime').datetimepicker({
+        weekStart: 1,
+        format: 'yyyy-mm-dd hh:ii',
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+</script>
 
 <!--- 
 <div id="wTableContainer"><script src="/javascript/table.week.js"></script></div> 
@@ -89,7 +124,7 @@
 	<div id="wTableContainer">hahah 1</div> 
 	<div id="mTableContainer">hahah 2</div> 
 >
-<!--->
+-->
 
 </body>
 

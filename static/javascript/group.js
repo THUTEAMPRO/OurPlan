@@ -1,4 +1,7 @@
 var group_util={
+    POWER_CREATER:1,
+    POWER_MANAGER:2,
+    POWER_MEMBER:3,
     listTemplateHTML:'<li><label data-groupid="<%=groupid%>" data-groupname="<%=groupname%>">'+
         '<input class="groupselect" name="groupselect" type="radio"/>'+
         '<%=groupname%>'+
@@ -37,11 +40,69 @@ var group_util={
                 var groupname=$label.attr("data-groupname");
                 var groupid=$label.attr("data-groupid");
                 selected_data.groupid=groupid;
-                $.get("/api/group_get_member/"+groupid,function(data){
+                $.get("/api/group_get_property/"+groupid,function(data){
                     group_member_util.render(data);
+                    group_property_util.render(data);
+                    selected_data.group=data;
                 });
             }
         });
+    },
+}
+var group_property_util={
+    authMap:{
+        1:"仅限小组成员手动添加",
+        2:"允许申请加入",
+        3:"用户自由加入"
+    },
+    tagHTML:'<button type="button" class="btn btn-info"><%=tag%>'+
+        '    <span class="glyphicon glyphicon-remove"></span>'+
+        '</button>',
+    bind:function(){
+        $("li.authselect").on("click",function(e){
+            var $li=$(e.target).closest("li.authselect");
+            var auth=$li.attr("data-auth");
+            $("a#groupauth").attr("data-auth",auth);
+            $("a#groupauth").html(group_property_util.authMap[auth]);
+        });
+        $("#taglist").on("click",function(e){
+            var $span=$(e.target).closest("span.glyphicon-remove");
+            if($span.length==1){
+                $(e.target).closest("button").remove();
+            }else{
+            }
+        });
+        $("#tagaddclick").on("click",function(e){
+            var tag=$("#tagaddinput").val();
+            if(tag){
+                if(tag.length>0){
+                    group_property_util.addRender(tag);
+                }
+            }
+        });
+        $("#propertysubmit").on("click",function(e){
+            if(selected_data.group){
+                var group=selected_data.group;
+                if(group.current_power==group_util.POWER_CREATER){
+                    console.log("creater submit");
+                    //TODO
+                }else if(group.current_power==group_util.POWER_MEMBER){
+                    console.log("member submit");
+                }
+            }
+        });
+    },
+    render:function(data){
+        $("#taglist button").remove();
+        _.each(data.tag,function(tagstr){
+            group_property_util.addRender(tagstr);
+        });
+    },
+    addRender:function(tagstr){
+        var taghtml=_.template(group_property_util.tagHTML)({
+            tag:tagstr
+        });
+        $("#taglist").prepend(taghtml);
     },
 }
 var group_member_util={
@@ -68,9 +129,9 @@ var group_member_util={
             }
         });
     },
-    render:function(data){
+    render:function(groupdata){
         $("ul#memberlist").html("");
-        _.each(data,function(user){
+        _.each(groupdata.members,function(user){
             var html=_.template(group_member_util.listTemplateHTML)(user);
             $("ul#memberlist").append(html);
         });
@@ -135,4 +196,5 @@ $(document).ready(function(){
     group_util.bind();
     friend_util.bind();
     group_member_util.bind();
+    group_property_util.bind();
 });

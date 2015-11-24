@@ -6,8 +6,9 @@
 from server import get_db
 from user import User
 
-POWER_MEMBER=0
 POWER_CREATER=1
+POWER_MANAGER=2
+POWER_MEMBER=3
 
 GROUP_JOIN_INVITE=1
 GROUP_JOIN_ALLOW=2
@@ -20,6 +21,7 @@ class Group(_db.Model):
     groupname = _db.Column(_db.String(128), index=True)
     createrid = _db.Column(_db.Integer)
     jointype = _db.Column(_db.Integer)
+    describe = _db.Column(_db.String(1024))
     def __init__(self,userid,groupname):
         self.createrid = userid
         self.groupname = groupname
@@ -85,16 +87,17 @@ class Group(_db.Model):
                 
     def get_dict(self):
         relations = GroupRelation.query.filter_by(groupid=self.id).all()
-        users = map(lambda r:User.query.filter_by(id=r.userid).first(), relations)
         userJson= []
-        for u in users:
-            if(u is not None):
-                userJson.append(dict(username=u.username,userid=u.id))
+        for r in relations:
+            u = User.query.filter_by(id=r.userid).first();
+            userJson.append(dict(username=u.username,userid=u.id,\
+                                 power=r.power))
         return dict(id=self.id,\
                         createrid=self.createrid,\
                         groupname=self.groupname,\
                         jointype=self.jointype,\
-                        tag=self.get_tag(),
+                        describe=self.describe,\
+                        tag=self.get_tag(),\
                         members=userJson)
     @staticmethod
     def get_one(group):

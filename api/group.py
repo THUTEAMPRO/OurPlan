@@ -53,7 +53,12 @@ def group_get_property(**kwargs):
     groupid = kwargs["groupid"]
     group = Group.query.filter_by(id=groupid).first()
     if group is not None:
-        return group.get_dict()
+        groupDict = group.get_dict()
+        for user in groupDict["members"]:
+            if user["userid"]==current_user.id:
+                groupDict["current_power"]=user["power"]
+                break;
+        return groupDict;
     else:
         return dict();
 

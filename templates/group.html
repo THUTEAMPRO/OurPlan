@@ -13,7 +13,8 @@
   var group_data={{group_data|tojson}};
   var group_each_data={};
   var selected_data={
-  groupid:undefined
+  groupid:undefined,
+  group:undefined
   }
 </script>
 
@@ -23,7 +24,7 @@
 <div id="menu">
   <div class="panel panel-default">
     <div class="panel-heading">
-	  <h2 class="panel-title">Group</h2>
+	  <h2 class="panel-title">所在群组</h2>
     </div>
     <div class="panel-body">
 	  <ul id="group">
@@ -34,7 +35,7 @@
     
   <div class="panel panel-default">
     <div class="panel-heading">
-	  <h2>Add Group</h2>
+	  <h2>新建群组</h2>
     </div>
     <div class="panel-body">
       <input id="groupname" />
@@ -62,13 +63,55 @@
     <div class="tab-pane fade in active" id="property">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h2 class="panel-title">Group Tag</h2>
+          <h2 class="panel-title">群组属性</h2>
+        </div>
+        <div >
+          <ul class="list-group">
+            <li class="list-group-item" >
+              <div class="input-group">
+              <span class="input-group-addon">
+                加入方式:
+              </span>
+              <a id="groupauth" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-auth="3">用户自由加入</a>
+              <ul class="dropdown-menu" role="menu">
+                <li class="authselect" data-auth="1"><a>仅限小组成员手动添加</a></li>
+                <li class="authselect" data-auth="2"><a>允许申请加入</a></li>
+                <li class="authselect" data-auth="3"><a>用户自由加入</a></li>
+              </ul>
+              </div>
+            </li>
+            <li class="list-group-item" >
+              <div class="input-group">
+                <span class="input-group-addon">
+                 群组简介:
+                </span>
+                <input type="text" class="form-control">
+              </div>
+            </li>
+            <li class="list-group-item" id="grouptag">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  标签:
+                </span>
+                <div id="taglist">
+                  <button type="button" class="btn btn-info">tag1
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                  <button type="button" class="btn btn-info">tag2
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                  <input id="tagaddinput" type="text" style="width:100px">
+                    <a href="#" id="tagaddclick">添加</a>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <button id="propertysubmit" type="button" class="btn btn-warning">提交
+              </button>
+            </li>
+          </ul>
         </div>
         <div class="panel-body">
-          <div id="grouptag">
-            <button type="button" class="btn btn-info">fds</button>
-            <button type="button" class="btn btn-info">rew</button>
-          </div>
         </div>
       </div>
     </div>

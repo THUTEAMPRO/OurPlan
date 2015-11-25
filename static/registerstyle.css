@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font: 10pt;
     box-sizing: border-box;
 }
 
@@ -9,7 +10,7 @@ body {
     background-size:100%;
     background: #fff url(~/assets/img/backgrounds/4.jpg) repeat_x;
     color: #7b8993;
-    font: 300 87.5%/1.5em 'Open Sans', sans-serif;
+    font: 10pt, sans-serif;
 }
 
 .form-wrapper {
@@ -37,7 +38,7 @@ form {
 .form-item-idcode-display {
 	margin-left:45%; 
     margin-bottom:10px;
-	 width: 65%;
+	width: 65%;
 }
 
 .form-item-idcode-display input{
@@ -63,8 +64,8 @@ form {
     width: 40%;
     margin-left:0px; 
     margin-bottom:10px;
-	 float:left;
-	 display:inline;
+	float:left;
+	display:inline;
 }
 
 .form-item input {
@@ -76,7 +77,48 @@ form {
     height: 50px;
     padding: 0 16px;
     transition: background 0.3s ease-in-out;
+    width: 70%;
+}
+
+.form-item label {
+	float:left;
+    width: 23%;
+	margin-top:15px; 
+}
+
+.normal{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    height: 50px;
+    padding: 0 16px;
+    transition: background 0.3s ease-in-out;
     width: 100%;
+}
+
+.form-item select {
+    width: 17%;
+	margin-top:15px; 
+}
+
+.form-item input[type="checkbox"] {
+    border-radius: 2px;
+    color: #000;
+    height: 15px;
+    padding: 0 16px;
+	margin-top:15px; 
+    transition: background 0.3s ease-in-out;
+    width: 68%;
+}
+
+.form-item input[type="radio"] {
+	float:left;
+    border-radius: 2px;
+    color: #000;
+    height: 15px;
+    padding: 0 16px;
+	margin-top:15px; 
+    transition: background 0.3s ease-in-out;
+    width: 15%;
 }
 
 .form-item input:focus {
@@ -99,7 +141,6 @@ form {
     cursor: pointer;
     height: 50px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1.2em;
     letter-spacing: 0.05em;
     text-align: center;
     text-transform: uppercase;
@@ -141,7 +182,6 @@ and (max-width : 320px) {
     text-decoration: underline;
     color: #7b8993;
     padding-top: 8px;
-    font-size: 16px;
 }
 
 #ref:hover {
@@ -150,7 +190,6 @@ and (max-width : 320px) {
     text-decoration: underline;
     -webkit-animation: hue 60s infinite linear;
     padding-top: 8px;
-    font-size: 16px;
 }
 ul li{
 display: inline-block;

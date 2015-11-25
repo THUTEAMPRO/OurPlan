@@ -6,78 +6,24 @@
 {% block page_content %}
 
 <html lang="en" class="no-js">
-	    <head>
-	        <meta charset="utf-8">
-	        <title>登录OurPlan日程管理</title>
-	        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	        <meta name="description" content="">
-	        <meta name="author" content="qpf" >
+<head>
+	<meta charset="utf-8">
+	<title>登录OurPlan日程管理</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="qpf" >
 	        
-				<!-- QQ -->
-				<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101259528" data-redirecturi="http://hrxyhelpe.sinaapp.com/success.html" charset="utf-8"></script>
-	    		<meta property="qc:admins" content="60775770101054056316110063757" />
+	<!-- QQ -->
+	<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101259528" data-redirecturi="http://hrxyhelpe.sinaapp.com/success.html" charset="utf-8"></script>
+	<meta property="qc:admins" content="60775770101054056316110063757" />
 	
-	        	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
-	        	<link rel="stylesheet" href="{{ url_for('static', filename='login_reset.css') }}">
-	        	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-	    </head>
-	<body background="{{ url_for('static', filename='img/backgrounds/3.jpg') }}" style="background-repeat:no-repeat;" onload="createCode()">
+	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='login_reset.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<script src="{{ url_for('static', filename='javascript/jquery-1.8.3.min.js') }}"></script>
+</head>
+<body background="{{ url_for('static', filename='img/backgrounds/3.jpg') }}" style="background-repeat:no-repeat;" onload="createCode()">
 	<div class="form-wrapper" > 
-		<div class="top">
-			<div class="colors"></div>
-		</div>
-		<script type="text/javascript">
-  		function check(form) {
-  			if(!validate()){
-  				return false;
-  			}
-       	if(form.password.value.length<4){
-       		alert("密码长度小于四位！请重新输入！");
-       		form.password.value="";
-           	form.password.focus();
-           	document.getElementById("identifyingcode").value="";
-			  	createCode();//刷新验证码
-           	return false;
-        	}
-       	return true;
-  		}
-	</script>
-		<script type="text/javascript">
-		var code; //在全局 定义验证码  
-		function createCode() {
-			 code = "";
-			  var codeLength = 4;//验证码的长度  
-			  var checkCode = document.getElementById("checkCode");
-			  var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');//所有候选组成验证码的字符，当然也可以用中文的  
-			  
-			  for (var i = 0; i < codeLength; i++) {
-				 var charIndex = Math.floor(Math.random() * 62);
-				 code += selectChar[charIndex];
-			  }
-			  //alert(code);
-			  if (checkCode) {
-				 checkCode.className = "code";
-				 checkCode.value = code;
-			  }
-		}
-		
-		function validate() {
-			  var inputCode = document.getElementById("identifyingcode").value;
-			  if (inputCode.length <= 0) {
-				 alert("请输入验证码！");
-				 document.getElementById("identifyingcode").focus();
-				 return false;
-			  } else if (inputCode != code) {
-			  	alert("验证码输入错误！");
-			  	document.getElementById("inputpassword").value="";
-			  	document.getElementById("identifyingcode").value="";
-				document.getElementById("identifyingcode").focus();
-			  	createCode();//刷新验证码
-			 	return false;  
-			  }
-			  return true;
-		}
-	</script>
 		<form name="form" action="/auth/login" method="post">
 			<div class="form">
 				<div class="form-item">
@@ -87,14 +33,14 @@
 					<input type="password" id="inputpassword" name="password" class="password" required="required" placeholder="密码" autocomplete="off">
 				</div>
 				<div class="form-item-idcode">
-				<input type="text" id="identifyingcode" name="identifyingcode" required="required" class="identifyingcode" placeholder="验证码" autocomplete="off">
-				<div class="form-item-idcode-display" >
-					<input type="text" onclick="createCode()" readonly="readonly" id="checkCode" >
-				</div>
+					<input type="text" id="identifyingcode" name="identifyingcode" required="required" class="identifyingcode" placeholder="验证码" autocomplete="off">
+					<div class="form-item-idcode-display" >
+						<input type="text" onclick="createCode()" readonly="readonly" id="checkCode" >
+					</div>
 				</div>
 				<div class="button-panel">
 	     			<input type="submit" class="button" title="Sign In" value="提交" onclick="return check(this.form)">
-	   		</div>
+	   			</div>
 			</div>
 		</form>
 		<br />
@@ -119,14 +65,68 @@
 	       	 });  
 			</script>
 	     	<form action="#" id="myform" method="post">
-	      	<input  hidden id="hidopenId" type="text" name="username" class="username" placeholder="用户名">
-	       	<input hidden  id="hidaccessToken" type="password" name="password" class="password" placeholder="登录密码">
-	       	<button  hidden id="hidsubmit" type="submit">登录</button>
-	     </form>
+			  	<input  hidden id="hidopenId" type="text" name="username" class="username" placeholder="用户名">
+			   	<input hidden  id="hidaccessToken" type="password" name="password" class="password" placeholder="登录密码">
+			   	<button  hidden id="hidsubmit" type="submit">登录</button>
+	     	</form>
 		</div>
 	</div>
 	<!-- Javascript -->
-	<script src="{{ url_for('static', filename='javascript/jquery-1.8.3.min.js') }}"></script>
+	
+	<script type="text/javascript">
+  		function check(form) {
+  			if(!validate()){
+  				return false;
+  			}
+		   	if(form.password.value.length<4){
+		   		alert("密码长度小于四位！请重新输入！");
+		   		form.password.value="";
+		       	form.password.focus();
+		       	document.getElementById("identifyingcode").value="";
+				createCode();//刷新验证码
+		       	return false;
+		    }
+		   	return true;
+  		}
+	</script>
+	<script type="text/javascript">
+		var code; //在全局 定义验证码  
+		function createCode() {
+			code = "";
+			var codeLength = 4;//验证码的长度  
+			var checkCode = document.getElementById("checkCode");
+			var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');//所有候选组成验证码的字符，当然也可以用中文的  
+			  
+			for (var i = 0; i < codeLength; i++) {
+				var charIndex = Math.floor(Math.random() * 62);
+				code += selectChar[charIndex];
+			}
+			  //alert(code);
+			if (checkCode) {
+				checkCode.className = "code";
+				checkCode.value = code;
+			}
+		}
+		
+		function validate() {
+			var inputCode = document.getElementById("identifyingcode").value;
+			if (inputCode.length <= 0) {
+				alert("请输入验证码！");
+				document.getElementById("identifyingcode").focus();
+				return false;
+			} 
+			else 
+				if (inputCode != code) {
+				  	alert("验证码输入错误！");
+				  	document.getElementById("inputpassword").value="";
+				  	document.getElementById("identifyingcode").value="";
+					document.getElementById("identifyingcode").focus();
+				  	createCode();//刷新验证码
+				 	return false;  
+			  	}
+			return true;
+		}
+	</script>
 	</body>
 </html>
 

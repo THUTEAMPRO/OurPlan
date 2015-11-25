@@ -3,14 +3,178 @@
 
 {% block page_content %}
 
-<script src="/javascript/jquery-1.8.3.min.js"></script>
-<script src="/javascript/underscore.min.js"></script>
-<script>
-</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='registerstyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='register_fort.css') }}">
 
+<script src="{{ url_for('static', filename='javascript/register_fort.js') }}"></script>
+<script src="{{ url_for('static', filename='javascript/scripts.js') }}"></script>
+<script src="{{ url_for('static', filename='javascript/jquery-1.8.3.min.js') }}"></script>
 
-<body>
+<body background="{{ url_for('static', filename='img/backgrounds/5.jpg') }}" onload="createCode()">
+	<div class="form-wrapper" >
+		<form id="formAddHandlingFee" name="form" action="#" method="post">
+			<div class="form">
+				<div class="form-item">
+					<label>姓名：</label>
+					<input type="text" id="name" name="name" autocomplete="off">
+				</div>
+				<div class="form-item">
+					<label>性别：</label>
+					<input type="radio" name="sex" value="boy" checked="checked"/><label>男</label>
+					<input type="radio" name="sex" value="girl"/><label>女</label>
+				</div>
+				<div class="form-item">
+					<label id="bornlabel">出生年月：</label>
+					<select name="year" id="year">
+					</select>
+					<select name="month" id="month" onchange="changeday()">
+					</select>
+					<select name="day" id="day">
+					</select>
+				</div>
+				<div class="form-item">
+					<label>所在地：</label>
+					<input type="text" name="address" autocomplete="off">
+				</div>
+				<div class="normal">
+					<label id="habdit">兴趣：</label>
+				</div>
+				<div class="button-panel">
+			 		<input type="submit" class="button" title="Sign In" value="提交"  onclick="tijiao(this.form)">
+		   		</div>
+			</div>
+		</form>
+	</div>
+	<script>
+		$(document).ready(function(){
+			var AjaxURL= "/auth/user_info";       
+			$.ajax({
+		    	type: "POST",
+		   		dataType: "JSON",
+		   		url: AjaxURL,
+		       	success: function (result) {
+		        	$('#name').valu=result.name;
+		      	},
+		       	error: function(data) {
+		        	alert("error:"+data.responseText);
+		      	}
+		   	});
+		});
+		var bornselect = document.getElementById("year"); //获取select对象
+		for (var i = 0; i < 50; i++) {
+			var optionObj = document.createElement("option"); //创建option对象
+			optionObj.value = 1966+i;
+			optionObj.innerHTML = 1966+i;
+			bornselect.appendChild(optionObj);
+		}
+		var bornselect = document.getElementById("year"); //获取select对象
+		for (var i = 0; i < bornselect.options.length; i++) {         
+		    if (bornselect.options[i].value == 1992) {         
+		        bornselect.options[i].selected = true;//默认选中         
+		        break;         
+		    }         
+    	}
+	
+		var bornselect = document.getElementById("month"); //获取select对象
+		for (var i = 0; i < 12; i++) {
+			var optionObj = document.createElement("option"); //创建option对象
+			optionObj.value = 1+i;
+			optionObj.innerHTML = 1+i;
+			bornselect.appendChild(optionObj);
+		}
+		var bornselect = document.getElementById("month"); //获取select对象
+		for (var i = 0; i < bornselect.options.length; i++) {         
+		    if (bornselect.options[i].value == 9) {         
+		        bornselect.options[i].selected = true;//默认选中         
+		        break;         
+		    }         
+    	}
 
+		var bornselect = document.getElementById("day"); //获取select对象
+		for (var i = 0; i < 31; i++) {
+			var optionObj = document.createElement("option"); //创建option对象
+			optionObj.value = 1+i;
+			optionObj.innerHTML = 1+i;
+			bornselect.appendChild(optionObj);
+		}
+		var bornselect = document.getElementById("day"); //获取select对象
+		for (var i = 0; i < bornselect.options.length; i++) {         
+		    if (bornselect.options[i].value == 22) {         
+		        bornselect.options[i].selected = true;//默认选中         
+		        break;         
+		    }         
+    	}
+		
+		var bornselect = document.getElementById("habdit").parentNode; //获取select对象
+		var x = new Array(1,2,3,4,5,6);
+		var y = new Array("摄影","旅游","军事","教育","房产","财经");
+		for (var i=0;i < x.length ;i++) {         
+		    var checkBoxq=document.createElement("input");
+			checkBoxq.type = "checkbox";
+			checkBoxq.name = "habdit";
+			checkBoxq.value= x[i];
+			bornselect.appendChild(checkBoxq);
+			bornselect.appendChild(document.createTextNode(y[i]));
+    	}
+ 
+		function changeday(){
+			var bornselect = document.getElementById("month"); //获取select对象
+			if(bornselect.value == 1 || bornselect.value == 3 || bornselect.value == 5 || bornselect.value == 7 || bornselect.value == 8 || bornselect.value == 10 || bornselect.value == 12 ){
+				var bornselectday = document.getElementById("day"); //获取select对象
+				for (var i = 0; i < 31; i++)         
+		    		if (bornselectday.options[i].value == 29 || bornselectday.options[i].value == 30 || bornselectday.options[i].value == 31)
+		        		bornselectday.options[i].style.display='';           
+			}
+			if(bornselect.value == 4 || bornselect.value == 6 || bornselect.value == 9 || bornselect.value == 11){
+				var bornselectday = document.getElementById("day"); //获取select对象
+				for (var i = 0; i < 31; i++){
+		    		if (bornselectday.options[i].value == 29 || bornselectday.options[i].value == 30)
+		        		bornselectday.options[i].style.display='';
+					if (bornselectday.options[i].value == 31)
+		        		bornselectday.options[i].style.display='none';
+				}
+			}
+			if(bornselect.value == 2){
+				var bornselectday = document.getElementById("day"); //获取select对象
+				var bornselectyear = document.getElementById("year"); //获取select对象
+				
+				for (var i = 0; i < 31; i++){
+		    		if (bornselectday.options[i].value == 29 || bornselectday.options[i].value == 30 || bornselectday.options[i].value == 31)
+		        		bornselectday.options[i].style.display='none';
+				}
+				if(bornselectyear.value % 4 == 0)
+					for (var i = 0; i < 31; i++){
+		    			if (bornselectday.options[i].value == 29)
+		        		bornselectday.options[i].style.display='';
+				}
+				if(bornselectyear.value % 100 == 0)
+					for (var i = 0; i < 31; i++){
+		    			if (bornselectday.options[i].value == 29)
+		        		bornselectday.options[i].style.display='none';
+				}
+				if(bornselectyear.value % 400 == 0)
+					for (var i = 0; i < 31; i++){
+		    			if (bornselectday.options[i].value == 29)
+		        		bornselectday.options[i].style.display='none';
+				}
+			}
+		}
+	function tijiao(form) {
+		var AjaxURL= "/auth/user_edit";       
+		$.ajax({
+        	type: "POST",
+       		dataType: "text",
+       		url: AjaxURL,
+       		data: $('#formAddHandlingFee').serialize(),
+           	success: function (result) {
+            	var strresult=result;
+             	alert(strresult);
+          	},
+           	error: function(data) {
+            	alert("error:"+data.responseText);
+          	}
+       	});
+	</script>
 </body>
 
 {% endblock %}

@@ -4,7 +4,7 @@
 
 from util import *
 from model import Group,GroupRelation
-from model import Task
+from model import Task, User
 
     
 """
@@ -25,7 +25,6 @@ def id_get_group(**kwargs):
 
 class AddGroupForm(Form):
     groupname = StringField("GroupName")
-    
 
 @api_impl("/add_group",methods=["POST","GET"])
 @login_required
@@ -43,50 +42,68 @@ def add_group(**kwargs):
     else:
         return dict(fail=1)
         
-class DelGroupForm(Form):
-    id = IntegerField("GroupId", validators=[Required()])
-
-@api_impl("/del_group",methods=["POST","GET"])
-@login_required
-def del_group(**kwargs):
-    form = DelTaskForm(csrf_enabled=False);
-    if form.validate_on_submit():
-        task_tmp = Task.query.filter_by(id=form.id.data).first()
-        db.session.delete(task_tmp)
-        return dict(success=1)
-    else:
-        return dict(fail=1)
 
 """
  member operation
 """
-    
-class UpdateTaskForm(Form):
-    id = IntegerField("Info", validators=[Required()])
-    date = DateTimeField('Date', format="%Y-%m-%d")
-    time = DateTimeField('Time', format="%H:%M:%S")
-    info = StringField("Info")
-    title = StringField("Title")
 
-@api_impl("/add_member",methods=["POST","GET"])
+@api_impl("/group_get_property/<int:groupid>",methods=["POST","GET"])
 @login_required
-def add_member(**kwargs):
-    form = UpdateTaskForm(csrf_enabled=False);
-    if form.validate_on_submit():
-        task_tmp = Task.query.filter_by(id=form.id.data).first()
-        if(task_tmp is not None):
-            task_tmp.update(date=form.date.data,\
-                                time=form.time.data,\
-                                title=form.title.data,\
-                                info=form.info.data)
-            return dict(success=1)
-        else:
-            return dict(fail=2)
+def group_get_property(**kwargs):
+    groupid = kwargs["groupid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        groupDict = group.get_dict()
+        for user in groupDict["members"]:
+            if user["userid"]==current_user.id:
+                groupDict["current_power"]=user["power"]
+                break;
+        return groupDict;
+    else:
+        return dict();
+
+@api_impl("/group_get_member/<int:groupid>",methods=["POST","GET"])
+@login_required
+def group_get_member(**kwargs):
+    groupid = kwargs["groupid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        return group.get_member()
+    else:
+        return []
+    
+    
+@api_impl("/group_add_member/<int:groupid>/<int:userid>",methods=["POST","GET"])
+@login_required
+def group_add_member(**kwargs):
+    groupid = kwargs["groupid"]
+    userid = kwargs["userid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        group.add_member(userid)
+        return dict(success=1)
     else:
         return dict(fail=1)
 
-@api_impl("/del_member",methods=["POST","GET"])
+@api_impl("/group_del_member/<int:groupid>/<int:userid>",methods=["POST","GET"])
 @login_required
-def del_member(**kwargs):
-    return dict(map(lambda t:(t.id,t.get_dict()), Task.query.filter_by(username=current_user.username).all()))
+def group_del_member(**kwargs):
+    groupid = kwargs["groupid"]
+    userid = kwargs["userid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        group.del_member(userid)
+        return dict(success=1)
+    else:
+        return dict(fail=1)
 
+@api_impl("/group_exit/<int:groupid>",methods=["POST","GET"])
+@login_required
+def group_exit(**kwargs):
+    groupid = kwargs["groupid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        group.del_member(current_user.id);
+        return dict(success=1);
+    else:
+        return dict(fail=1)

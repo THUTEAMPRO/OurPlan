@@ -35,31 +35,43 @@
 <body>
 
 <div id="menu">
-	<h2>Menu</h2>
-	<ul>
-		<li>item 1</li>
-		<li>item 2</li>
-		<li>item 3</li>
-	</ul>
-	<h2>{{user_data.username}} 's Calendar</h2>
-	<form action="" method="get">
-	<ul id="group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+	  <h2 class="panel-title">{{user_data.username}} 's </h2>
+    </div>
+    <div class="panel-body">
+	  <ul>
 		<li><label><input name="CalendarGroup" type="radio" value="" />个人 </label></li>
+	  </ul>
+    </div>
+<!------------------>
+    <div class="panel-heading">
+	  <h2 class="panel-title">{{user_data.username}} 's </h2>
+    </div>
+    <div class="panel-body">
+	  <ul>
         {% for group in group_data%}
 		<li><label data-id="{{group.groupid}}"><input name="CalendarGroup" type="radio" value="" />{{group.groupname}}</label></li>
         {% endfor %}
-	</ul>
-	</form>
+	  </ul>
+    </div>
+  </div>
 </div>
 <script>
 findWeather();
 </script>
-<span id="weather"></span>
 
 
-<div id="content">
-	<div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 
 
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span id="weather"></span>
+    <div id="content">
+	  <div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 
+
+    </div>
+  </div>
 </div>
 
 <!--- 

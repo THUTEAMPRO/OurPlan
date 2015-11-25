@@ -62,3 +62,18 @@ class User(_db.Model):
 
     def get_id(self):
         return unicode(self.username)
+
+class UserTag(_db.Model):
+    __tablename__ = 'user_tag'
+    id = _db.Column(_db.Integer, primary_key=True)
+    userid = _db.Column(_db.Integer, index=True)
+    username = _db.Column(_db.String(128), index=True)
+    tag = _db.Column(_db.String(128), index=True)
+
+    def __init__(self, userid, tag):
+        user = User.get_one(userid);
+        self.tag = tag;
+        self.userid = user.id;
+        self.username = user.username;
+
+

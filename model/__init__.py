@@ -2,9 +2,9 @@
 # $File: __init__.py
 # $Author: cz <chenze-321n[at]163[dot]com>
 
-from user import User
+from user import User, UserTag
 from task import Task
-from group import Group, GroupRelation
+from group import Group, GroupRelation, GroupTag
 from friend import Friend
 
 from server import get_db

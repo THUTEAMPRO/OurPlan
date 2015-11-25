@@ -6,4 +6,8 @@ label:hover{
 }
 label{
     color:#000000;
+    font-size:20px;
+}
+#menu h2{
+    font-size:20px;
 }

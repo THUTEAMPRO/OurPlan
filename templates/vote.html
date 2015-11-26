@@ -17,6 +17,7 @@
 <!--------------------------------->
 <script>
   var group_data={{group_data|tojson}};
+  var vote_data={{vote_data|tojson}};
   var selected_data={
   groupid:undefined
   }
@@ -27,16 +28,34 @@
 <!---------------------------------------------------------->
   <ul id="myTab" class="nav nav-tabs">
     <li class="active">
-      <a data-toggle="tab" href="#dovote">Vote</a>
+      <a data-toggle="tab" href="#dovote">投票</a>
     </li>
     <li>
-      <a data-toggle="tab" href="#addvote">Add Vote</a>
+      <a data-toggle="tab" href="#addvote">新建投票</a>
     </li>
   </ul>
 <!---------------------------------------------------------->
   <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade in active" id="dovote">
-      fdsfsd
+      {% for vote in vote_data %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{loop.index}}. {{ vote.title }}</h3>
+        </div>
+        <div class="panel-heading">
+          {{ vote.info }}
+        </div>
+        <ul class="list-group">
+          {% for option in vote.options %}
+          <li class="list-group-item"><input name="optionchoose" type="radio">{{option.option_datetime}}</li>
+          {% endfor %}
+        </ul>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-info">提交
+          </button>
+        </div>
+      </div>
+      {% endfor %}
     </div>
 <!------------------------------------------------>
     <div class="tab-pane fade" id="addvote">
@@ -58,9 +77,9 @@
               <div class="col-xs-4">
                 <div class="input-group">
                   <span class="input-group-addon">
-                    peoplelimit:
+                   预期人数:
                   </span>
-                  <input id="votelimit" type="text" class="form-control">
+                  <input id="votelimit" type="text" class="form-control" onkeydown="onlyNum()" style="ime-mode:Disabled">
                 </div>
               </div>
               <div class="col-xs-4">
@@ -86,7 +105,7 @@
                   <span class="input-group-addon">
                     内容:
                   </span>
-                  <input type="text" class="form-control">
+                  <input id="voteinfo" type="text" class="form-control">
                 </div>
               </div>
             </div>
@@ -109,13 +128,14 @@
             </button>
           </p>
         </div>
-        <div>
+        <div class="panel-footer">
           <form id="votesubmitform" method="POST">
-            <input name="votegroupid" type="hidden">
-            <input name="votetitle" type="hidden">
-            <input name="votelimit" type="hidden">
-            <input name="voteoption" type="hidden">
-            <button id="votesubmit" type="submit" class="btn btn-warning" onclick="return group_property_util.submit()">submit
+            <input name="groupid" type="hidden">
+            <input name="title" type="hidden">
+            <input name="info" type="hidden">
+            <input name="limit" type="hidden">
+            <input name="options" type="hidden">
+            <button id="votesubmit" type="submit" class="btn btn-warning" onclick="return vote_util.add_vote_submit()">提交
             </button>
           </form>
         </div>

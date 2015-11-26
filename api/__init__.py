@@ -9,4 +9,5 @@ import auth
 import group
 import friend
 import tag
+import vote
 import test

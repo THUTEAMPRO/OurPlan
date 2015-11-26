@@ -16,7 +16,7 @@ class User(_db.Model):
 
     @staticmethod
     def get_one(user):
-        if type(user)==str:
+        if type(user)==str or type(user)==unicode:
             return User.query.filter_by(username=user).first()
         elif type(user)==int:
             return User.query.filter_by(id=user).first()

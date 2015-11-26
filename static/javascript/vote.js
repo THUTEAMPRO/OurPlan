@@ -51,11 +51,21 @@ var vote_util={
     },
     add_vote_submit:function(){
         var form={
-            votetitle:$("input#votetitle").val(),
-            votelimit:$("input#votelimit").val(),
-            votegroupid:selected_data.groupid,
-            voteoption:vote_util.get_options()
+            title:$("input#votetitle").val(),
+            info:$("input#voteinfo").val(),
+            limit:$("input#votelimit").val(),
+            groupid:selected_data.groupid,
+            options:vote_util.get_options()
         };
+        if(form.title && form.groupid && form.limit && form.options.length>=1){
+            _.each(form,function(v,k){
+                $("form input[name="+k+"]").val(v);
+            });
+            return true;
+        }else{
+            alert("form not finish");
+            return false;
+        }
     },
     get_options:function(){
         var $datetime=$('.form_datetime');
@@ -73,3 +83,11 @@ var vote_util={
 $(document).ready(function(){
     vote_util.bind();
 });
+
+function onlyNum() {
+    if(!(event.keyCode==46)&&!(event.keyCode==8)&&!(event.keyCode==37)&&!(event.keyCode==39)){
+        if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105))){
+            event.returnValue=false;
+        }
+    }
+}

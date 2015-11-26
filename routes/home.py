@@ -26,10 +26,6 @@ def home():
 def user_edit():
     return render_template("user_edit.html")
 
-@app.route("/vote")
-def vote():
-    group_data=api.group.user_get_group()
-    return render_template("vote.html", group_data=group_data);
 
 @app.route("/discover")
 def discover():

@@ -17,6 +17,30 @@ def user_get_group(**kwargs):
     relations = GroupRelation.query.filter_by(userid=current_user.id).all()
     return map(lambda r:r.get_dict(),relations)
 
+class UpdateGroupForm(Form):
+    groupid = IntegerField("GroupId", validators=[Required()])
+    jointype = IntegerField("jointype")
+    tag = StringField("tags")
+    describe = StringField("describe")
+    
+@api_impl("/user_update_group",methods=["POST","GET"])
+@login_required
+def user_update_group(**kwargs):
+    form = UpdateGroupForm(csrf_enabled=False);
+    if form.validate_on_submit():
+        group = Group.query.filter_by(id=form.groupid.data).first();
+        if(form.tag.data):
+            group.del_all_tag();
+            tags = form.tag.data.split(",")
+            for tag in tags:
+                group.add_tag(tag);
+        if(form.jointype.data):
+            group.set_jointype(form.jointype.data)
+        if(form.describe.data):
+            group.describe=form.describe.data
+        return dict(success=1)
+    else:
+        return dict(fail=1)
 
 @api_impl("/id_get_group/<id>",methods=["POST","GET"])
 def id_get_group(**kwargs):
@@ -24,7 +48,7 @@ def id_get_group(**kwargs):
     return group_tmp.get_dict();
 
 class AddGroupForm(Form):
-    groupname = StringField("GroupName")
+    groupname = StringField("GroupName", validators=[Required()])
 
 @api_impl("/add_group",methods=["POST","GET"])
 @login_required

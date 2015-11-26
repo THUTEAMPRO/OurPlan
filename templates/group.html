@@ -72,11 +72,11 @@
               <span class="input-group-addon">
                 加入方式:
               </span>
-              <a id="groupauth" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-auth="3">用户自由加入</a>
+              <a id="groupjointype" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-jointype="3">用户自由加入</a>
               <ul class="dropdown-menu" role="menu">
-                <li class="authselect" data-auth="1"><a>仅限小组成员手动添加</a></li>
-                <li class="authselect" data-auth="2"><a>允许申请加入</a></li>
-                <li class="authselect" data-auth="3"><a>用户自由加入</a></li>
+                <li class="jointypeselect" data-jointype="1"><a>仅限小组成员手动添加</a></li>
+                <li class="jointypeselect" data-jointype="2"><a>允许申请加入</a></li>
+                <li class="jointypeselect" data-jointype="3"><a>用户自由加入</a></li>
               </ul>
               </div>
             </li>
@@ -85,7 +85,7 @@
                 <span class="input-group-addon">
                  群组简介:
                 </span>
-                <input type="text" class="form-control">
+                <input id="groupdescribe" type="text" class="form-control">
               </div>
             </li>
             <li class="list-group-item" id="grouptag">
@@ -94,10 +94,10 @@
                   标签:
                 </span>
                 <div id="taglist">
-                  <button type="button" class="btn btn-info">tag1
+                  <button type="button" class="btn btn-info">tag1 
                     <span class="glyphicon glyphicon-remove"></span>
                   </button>
-                  <button type="button" class="btn btn-info">tag2
+                  <button type="button" class="btn btn-info">tag2 
                     <span class="glyphicon glyphicon-remove"></span>
                   </button>
                   <input id="tagaddinput" type="text" style="width:100px">
@@ -106,8 +106,14 @@
               </div>
             </li>
             <li class="list-group-item">
-              <button id="propertysubmit" type="button" class="btn btn-warning">提交
+              <form id="propertysubmitform" method="POST">
+                <input name="groupid" type="hidden">
+                <input name="jointype" type="hidden">
+                <input name="tag" type="hidden">
+                <input name="describe" type="hidden">
+              <button id="propertysubmit" type="submit" class="btn btn-warning" onclick="return group_property_util.submit()">提交
               </button>
+              </form>
             </li>
           </ul>
         </div>

@@ -22,11 +22,6 @@ def home():
             group_task_data[groupid]=tasks
     return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data)
 
-@app.route("/group")
-def group():
-    group_data=api.group.user_get_group()
-    return render_template("group.html", group_data=group_data);
-
 @app.route("/user_edit")
 def user_edit():
     return render_template("user_edit.html")

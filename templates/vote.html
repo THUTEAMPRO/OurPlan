@@ -40,45 +40,57 @@
     </div>
 <!------------------------------------------------>
     <div class="tab-pane fade" id="addvote">
-      <!-------------------------->
-    <div id="menu">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">Group</h2>
-        </div>
-        <div class="list-group">
-          <ul id="group">
-            {% for group in group_data%}
-            <li>
-              <label data-groupid="{{group.groupid}}" data-groupname="{{group.groupname}}">
-                <input class="groupselect" name="groupselect" type="radio"/>
-                {{group.groupname}}
-              </label>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
 
-
-    </div>
       <!-------------------------->
-    <div id="content">
       <!--------------------->
       <div id="vote" class="panel panel-default">
         <div class="panel-heading">
-          <div class="input-group">
-            <span class="input-group-addon">
-              标题:
-            </span>
-            <input type="text" class="form-control">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon">
-              内容:
-            </span>
-            <input type="text" class="form-control">
-          </div>
+            <!--------------->
+            <div class="row">
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    标题:
+                  </span>
+                  <input id="votetitle" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    peoplelimit:
+                  </span>
+                  <input id="votelimit" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    Group:
+                  </span>
+                  <a id="selectedgroup" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">select<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    {% for group in group_data%}
+                      <li class="groupselect" data-groupid="{{group.groupid}}" data-groupname="{{group.groupname}}">
+                        <a>{{group.groupname}}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!--------------->
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    内容:
+                  </span>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <!--------------->
         </div>
         <div id="optionlist" class="list-group">
           <a id="option1" href="#" class="list-group-item">
@@ -97,9 +109,18 @@
             </button>
           </p>
         </div>
+        <div>
+          <form id="votesubmitform" method="POST">
+            <input name="votegroupid" type="hidden">
+            <input name="votetitle" type="hidden">
+            <input name="votelimit" type="hidden">
+            <input name="voteoption" type="hidden">
+            <button id="votesubmit" type="submit" class="btn btn-warning" onclick="return group_property_util.submit()">submit
+            </button>
+          </form>
+        </div>
       </div>
       <!--------------------->
-    </div>
       <!-------------------------->
 <!------------------------------------------------>
   </div>

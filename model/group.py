@@ -35,6 +35,10 @@ class Group(_db.Model):
         _db.session.add(relation)
         _db.session.commit()
 
+    def set_jointype(self, jointype):
+        if(jointype>=1 and jointype<=3):
+            self.jointype = jointype;
+
     def add_member(self, userid):
         relation = GroupRelation.query.filter_by(groupid=self.id,userid=userid).first()
         if(relation is not None):
@@ -51,6 +55,11 @@ class Group(_db.Model):
             _db.session.commit()
         else:
             return ;
+    def del_all_tag(self):
+        groupTag = GroupTag.query.filter_by(groupid=self.id).all()
+        for tag in groupTag:
+            _db.session.delete(tag)
+        _db.session.commit()
         
     def get_tag(self):
         groupTags = GroupTag.query.filter_by(groupid=self.id).all()

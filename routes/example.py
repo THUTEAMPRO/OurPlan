@@ -50,6 +50,8 @@ def send_email(to, subject, template, **kwargs):
 
 @app.route('/email', methods=['GET', 'POST'])
 def email():
+    return render_template('email.html')
+"""
     form = NameForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name.data).first()
@@ -62,3 +64,4 @@ def email():
         return redirect(url_for('index'))
     return render_template('register.html', form=form, name=session.get('name'),
                            known=session.get('known', False))
+"""

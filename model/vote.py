@@ -29,6 +29,7 @@ class Vote(_db.Model):
     title = _db.Column(_db.String(128), index=True)
     info = _db.Column(_db.String(128))
     limit = _db.Column(_db.Integer)
+    finished = _db.Column(_db.Boolean)
 
     def __init__(self,groupid,title,info,limit):
         self.groupid=groupid
@@ -38,13 +39,28 @@ class Vote(_db.Model):
             self.limit = 2
         else:
             self.limit = limit
+        self.finished=False;
         
     def __repr__(self):
         return '<Message %r>' % self.groupid
+    
+    def check_user_done(self,userid):
+        voteUser=VoteUser.query.filter_by(userid=userid,voteid=self.id).first()
+        if voteUser is not None:
+            return True
+        else:
+            return False
 
     def do_vote(self,userid,optionid):
-        # TODO
-        pass
+        voteOption=VoteOption.query.filter_by(id=optionid).first()
+        voteOption.count=voteOption.count+1;
+        voteUser=VoteUser(userid,self.id)
+        _db.session.add(voteUser)
+        if(voteOption.count>=self.limit):
+            self.finished=True
+            return voteOption
+        else:
+            return None
 
     def set_option(self,optionList):
         print optionList
@@ -70,6 +86,7 @@ class Vote(_db.Model):
                     groupid=group.id,\
                     options=optionDict,\
                     limit=self.limit,\
+                    finished=str(self.finished),\
                     title=self.title,\
                     info=self.info)
 

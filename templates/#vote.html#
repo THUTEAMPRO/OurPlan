@@ -29,13 +29,13 @@
 <!---------------------------------------------------------->
   <ul id="myTab" class="nav nav-tabs">
     <li class="active">
-      <a data-toggle="tab" href="#dovote">投票</a>
+      <a data-toggle="tab" href="#dovote">鎶曠エ</a>
     </li>
     <li>
-      <a data-toggle="tab" href="#addvote">新建投票</a>
+      <a data-toggle="tab" href="#addvote">鏂板缓鎶曠エ</a>
     </li>
     <li>
-      <a data-toggle="tab" href="#readvote">投票</a>
+      <a data-toggle="tab" href="#readvote">鎶曠エ</a>
     </li>
   </ul>
 <!---------------------------------------------------------->
@@ -56,7 +56,7 @@
         </ul>
         <div class="panel-footer">
           <input name="dovoteid" type="hidden" value="{{vote.id}}">
-          <button type="button" class="btn btn-info dovote">提交
+          <button type="button" class="btn btn-info dovote">鎻愪氦
           </button>
         </div>
       </div>
@@ -64,58 +64,55 @@
     </div>
 <!------------------------------------------------>
 
-    <div class="tab-pane fade" id="addvote">
-
-      <!-------------------------->
-      <!--------------------->
-      <div id="vote" class="panel panel-default">
+    <djiv class="tab-pane fade" id="addvote">
+xd IDuu="vote" class="panel panel-default">
         <div class="panel-heading">
-          <!--------------->
-          <div class="row">
-            <div class="col-xs-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  标题:
-                </span>
-                <input id="votetitle" type="text" class="form-control">
+            <!--------------->
+            <div class="row">
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    鏍囬����:
+                  </span>
+                  <input id="votetitle" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   棰勬湡浜烘暟:
+                  </span>
+                  <input id="votelimit" type="text" class="form-control" onkeydown="onlyNum()" style="ime-mode:Disabled">
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    Group:
+                  </span>
+                  <a id="selectedgroup" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">select<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    {% for group in group_data%}
+                      <li class="groupselect" data-groupid="{{group.groupid}}" data-groupname="{{group.groupname}}">
+                        <a>{{group.groupname}}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="col-xs-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  预期人数:
-                </span>
-                <input id="votelimit" type="text" class="form-control" onkeydown="onlyNum()" style="ime-mode:Disabled">
+            <!--------------->
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    鍐呭����:
+                  </span>
+                  <input id="voteinfo" type="text" class="form-control">
+                </div>
               </div>
             </div>
-            <div class="col-xs-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  Group:
-                </span>
-                <a id="selectedgroup" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">select<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  {% for group in group_data%}
-                  <li class="groupselect" data-groupid="{{group.groupid}}" data-groupname="{{group.groupname}}">
-                    <a>{{group.groupname}}</a>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!--------------->
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  内容:
-                </span>
-                <input id="voteinfo" type="text" class="form-control">
-              </div>
-            </div>
-          </div>
-          <!--------------->
+            <!--------------->
         </div>
         <div id="optionlist" class="list-group">
           <a id="option1" href="#" class="list-group-item">
@@ -130,7 +127,7 @@
         <div>
           <p>
             <button id="addoption" type="button" class="btn btn-block">
-              添加日期选项
+              娣诲姞鏃ユ湡閫夐」
             </button>
           </p>
         </div>
@@ -141,13 +138,12 @@
             <input name="info" type="hidden">
             <input name="limit" type="hidden">
             <input name="options" type="hidden">
-            <button id="votesubmit" type="submit" class="btn btn-warning" onclick="return vote_util.add_vote_submit()">提交
+            <button id="votesubmit" type="submit" class="btn btn-warning" onclick="return vote_util.add_vote_submit()">鎻愪氦
             </button>
           </form>
         </div>
       </div>
       <!--------------------->
-    </div>
       <!-------------------------->
       
       <!------------------------------------------------>
@@ -155,11 +151,7 @@
         {% for vote in vote_data %}
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">{{loop.index}}. {{ vote.title }} --- {{vote.limit}}
-              {% if vote.finished=="True" %}
-              finished
-              {% endif %}
-            </h3>
+            <h3 class="panel-title">{{loop.index}}. {{ vote.title }} --- {{vote.limit}}</h3>
           </div>
           <div class="panel-heading">
             {{ vote.info }}

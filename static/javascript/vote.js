@@ -48,6 +48,20 @@ var vote_util={
         $("button#addoption").click(function(){
             add_option();
         });
+        $("button.dovote").click(function(e){
+            var $panel=$(e.target).closest("div.panel.panel-default");
+            var voteid=$panel.find("input[name=dovoteid]").val()
+            var optionchoose=$panel.find("input[name=optionchoose]:checked").val();
+            $.get("/api/do_vote/"+voteid+"/"+optionchoose+"",function(data){
+                if(data.success){
+                    $panel.remove();
+                }else if(data.fail){
+                    alert("submit fail");
+                }else{
+                    console.log(data);
+                }
+            });
+        });
     },
     add_vote_submit:function(){
         var form={

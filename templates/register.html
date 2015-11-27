@@ -11,7 +11,7 @@
 
 <body background="{{ url_for('static', filename='img/backgrounds/3.jpg') }}" onload="createCode()">
 	<div class="form-wrapper" >
-		<form id="formAddHandlingFee" name="form" action="#" method="post">
+		<form id="formAddHandlingFee" name="form">
 			<div class="form">
 				<div class="form-item">
 					<input type="text" name="username"  class="username" required="required" placeholder="用户名" autocomplete="off">
@@ -87,8 +87,9 @@
 			  	form.confirmpassword.focus();
            		flag = 1;
         	}
+			alert($('#formAddHandlingFee').serialize());
 			if(flag==0){
-				var AjaxURL= "/auth/register";       
+				var AjaxURL= "/api/register";       
            		//alert($('#formAddHandlingFee').serialize());
             	$.ajax({
                 	type: "POST",

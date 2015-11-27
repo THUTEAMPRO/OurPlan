@@ -6,7 +6,6 @@ from util import *
 from model import Group,GroupRelation
 from model import Task, User
 
-    
 """
  group operation
 """

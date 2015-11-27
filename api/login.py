@@ -5,7 +5,7 @@
 from util import *
 from model import User
 from flask import session
-from auth.forms import LoginForm
+from auth.forms import LoginForm, RegistrationForm
 from flask_login import current_user
 
 @api_impl("/login", methods=["POST"])

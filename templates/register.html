@@ -1,51 +1,139 @@
 {% extends "base.html" %}
 {% block page_content %}
 {% import "bootstrap/wtf.html" as wtf %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='register_fort.css') }}">
-
-<script src="{{ url_for('static', filename='javascript/register_fort.js') }}"></script>
-<script src="{{ url_for('static', filename='javascript/scripts.js') }}"></script>
-<script src="{{ url_for('static', filename='javascript/jquery-1.8.3.min.js') }}"></script>
-
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>OurPlan日程管理系统是一个很好用的系统！</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='register_fort.css') }}">
+	<link rel="stylesheet" href="http://dreamsky.github.io/main/blog/common/init.css">
+	<style>
+		.top-banner {
+		  	background-color: #333;
+		}
+		.nav {
+			margin-bottom: 30px;
+		}
+		.nav li.current a{
+			background-color: #009DFF;
+			color: #fff;
+			padding: 10px;
+		}
+		.nav a {
+			margin: 5px;
+			color: #333;
+			text-decoration: none;
+		}
+	</style>
+	<script src="{{ url_for('static', filename='javascript/register_fort.js') }}"></script>
+	<script src="{{ url_for('static', filename='javascript/scripts.js') }}"></script>
+	<script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
 <body background="{{ url_for('static', filename='img/backgrounds/3.jpg') }}" onload="createCode()">
 	<div class="form-wrapper" >
-		<form id="formAddHandlingFee" name="form" action="#" method="post">
-			<div class="form">
-				<div class="form-item">
-					<input type="text" name="username"  class="username" required="required" placeholder="用户名" autocomplete="off">
-				</div>
-				<div class="form-item">
-					<input type="password" id="password" name="password" class="password" required="required" placeholder="密码" autocomplete="off">
-				</div>
-				<div class="form-item">
-					<input type="password" id="confirmpassword" name="confirmpassword" class="confirmpassword" required="required" placeholder="确认密码" autocomplete="off">
-				</div>
-				<div class="form-item">
-					<input type="email" id="email" name="email" required="required" class="email" placeholder="您的邮箱" autocomplete="off">
-				</div>
-				<div class="form-item-idcode">
-					<input type="text" id="identifyingcode" name="identifyingcode" required="required" class="identifyingcode" placeholder="验证码" autocomplete="off">
-					<div class="form-item-idcode-display" >
-						<input type="text" onclick="createCode()" readonly="readonly" id="checkCode" >
-					</div>
-				</div>
-				<div class="button-panel">
-			 		<input type="submit" class="button" title="Sign In" value="提交"  onclick="check(this.form)">
-		   		</div>
-			</div>
-		</form>
-
-		<br />
-		<div class="bdsharebuttonbox">
-			<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
-			<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
-			<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
-			<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
-			<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
-			<a href="#" class="bds_more" data-cmd="more">分享到：</a>
+	  <div class="top">	
+	  		<div class="colors"></div>
 		</div>
+		<script type="text/javascript">
+  		function check(form) {
+			//window.location = 'test.html';
+  			if(!validate()){
+  				return false;
+  			}
+       	if(form.password.value.length<4){
+       		alert("密码长度小于四位！请重新输入！");
+           	form.password.value="";
+           	form.confirmpassword.value="";
+           	document.getElementById("identifyingcode").value="";
+			  	createCode();//刷新验证码
+			  	form.password.focus();
+           	return false;
+        	}
+        	if(form.password.value!=form.confirmpassword.value){
+       		alert("两次输入的密码不一致，请重新输入！");
+           	form.confirmpassword.value="";
+           	document.getElementById("identifyingcode").value="";
+			  	createCode();//刷新验证码
+			  	form.confirmpassword.focus();
+           	return false;
+        	}
+       	return true;
+  		}
+	</script>
+	<script type="text/javascript">
+		var code; //在全局 定义验证码  
+		function createCode() {
+			 code = "";
+			  var codeLength = 6;//验证码的长度  
+			  var checkCode = document.getElementById("checkCode");
+			  var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');//所有候选组成验证码的字符，当然也可以用中文的  
+			  
+			  for (var i = 0; i < codeLength; i++) {
+				 var charIndex = Math.floor(Math.random() * 62);
+				 code += selectChar[charIndex];
+			  }
+			  //alert(code);
+			  if (checkCode) {
+				 checkCode.className = "code";
+				 checkCode.value = code;
+			  }
+		}
+		function validate() {
+			  var inputCode = document.getElementById("identifyingcode").value;
+			  if (inputCode.length <= 0) {
+				 alert("请输入验证码！");
+				 document.getElementById("identifyingcode").focus();
+				 return false;
+			  } else if (inputCode != code) {
+			  	alert("验证码输入错误！");
+			  	document.getElementById("password").value="";
+			  	document.getElementById("confirmpassword").value="";
+			  	document.getElementById("identifyingcode").value="";
+				document.getElementById("identifyingcode").focus();
+			  	createCode();//刷新验证码
+			 	return false;  
+			  }
+			  return true;
+		}
+	</script>
+	天气:<span id="weather" style="font-family:华文中宋; color:white; "></span>
+	<form name="form" action="#" method="post">
+		<div class="form">
+			<div class="form-item">
+				<input type="text" name="username"  class="username" required="required" placeholder="用户名" autocomplete="off">
+			</div>
+			<div class="form-item">
+				<input type="password" id="password" name="password" class="password" required="required" placeholder="密码" autocomplete="off">
+			</div>
+			<div class="form-item">
+				<input type="password" id="confirmpassword" name="confirmpassword" class="confirmpassword" required="required" placeholder="确认密码" autocomplete="off">
+			</div>
+			<div class="form-item">
+				<input type="email" name="email" required="required" class="email" placeholder="您的邮箱" autocomplete="off">
+			</div>
+			<div class="form-item-idcode">
+				<input type="text" id="identifyingcode" name="identifyingcode" required="required" class="identifyingcode" placeholder="验证码" autocomplete="off">
+				<div class="form-item-idcode-display" >
+					<input type="text" onclick="createCode()" readonly="readonly" id="checkCode" >
+				</div>
+			</div>
+			<div class="button-panel">
+		 		<input type="submit" class="button" title="Sign In" value="提交"  onclick="return check(this.form)">
+	   	</div>
+		</div>
+	</form>
+  	
+<script type="text/javascript">findWeather();</script>
+	<br />
+	<div class="bdsharebuttonbox">
+		<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a>
+		<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a>
+		<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博">腾讯微博</a>
+		<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网">人人网</a>
+		<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+		<a href="#" class="bds_more" data-cmd="more">分享到：</a>
 	</div>
 	<script>window._bd_share_config={
 		"common":{"bdSnsKey":{},
@@ -63,88 +151,12 @@
 		"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};
 		with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 	</script>
-	<script type="text/javascript">
-  		function check(form) {
-			//window.location = 'test.html';
-			var flag = 0;
-  			if(!validate()){
-  				flag = 1;
-  			}
-       		if(form.password.value.length<4){
-       			alert("密码长度小于四位！请重新输入！");
-           		form.password.value="";
-           		form.confirmpassword.value="";
-           		document.getElementById("identifyingcode").value="";
-			  	createCode();//刷新验证码
-			  	form.password.focus();
-           		flag = 1;
-        	}
-        	if(form.password.value!=form.confirmpassword.value){
-		   		alert("两次输入的密码不一致，请重新输入！");
-		       	form.confirmpassword.value="";
-		       	document.getElementById("identifyingcode").value="";
-			  	createCode();//刷新验证码
-			  	form.confirmpassword.focus();
-           		flag = 1;
-        	}
-			if(flag==0){
-				var AjaxURL= "/auth/register";       
-           		//alert($('#formAddHandlingFee').serialize());
-            	$.ajax({
-                	type: "POST",
-                    dataType: "text",
-                    url: AjaxURL,
-                    data: $('#formAddHandlingFee').serialize(),
-                    success: function (result) {
-                        var strresult=result;
-                        alert(strresult);
-						window.location.href="email.html?email="+$('#email').value;
-                    },
-                    error: function(data) {
-                        alert("error:"+data.responseText);
-           			}
-                });
-			}
-  		}
+	</div>
+	<div class="footer-banner" style="width:728px; margin:200px auto 0"></div>
+	<script>
+		flash();
 	</script>
-	<script type="text/javascript">
-		var code; //在全局 定义验证码  
-		function createCode() {
-			code = "";
-			var codeLength = 4;//验证码的长度  
-			var checkCode = document.getElementById("checkCode");
-			var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');//所有候选组成验证码的字符，当然也可以用中文的  
-			  
-			for (var i = 0; i < codeLength; i++) {
-				var charIndex = Math.floor(Math.random() * 62);
-				code += selectChar[charIndex];
-			}
-			  //alert(code);
-			if (checkCode) {
-				checkCode.className = "code";
-				checkCode.value = code;
-			}
-		}
-		function validate() {
-			var inputCode = document.getElementById("identifyingcode").value;
-			if (inputCode.length <= 0) {
-				alert("请输入验证码！");
-				document.getElementById("identifyingcode").focus();
-				return false;
-			} 
-			else 
-				if (inputCode != code) {
-				  	alert("验证码输入错误！");
-				  	document.getElementById("password").value="";
-				  	document.getElementById("confirmpassword").value="";
-				  	document.getElementById("identifyingcode").value="";
-					document.getElementById("identifyingcode").focus();
-				  	createCode();//刷新验证码
-				 	return false;  
-			  	}
-			return true;
-		}	
-	</script>
+	<script src="http://dreamsky.github.io/main/blog/common/init.js"></script>
 </body>
 
 {% endblock %}

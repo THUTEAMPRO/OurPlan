@@ -16,26 +16,26 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
+                <li><a href="/">主页</a></li>
             </ul>
 
             {% if current_user.is_authenticated %}
                 <ul class="nav navbar-nav">
-                    <li><a href="/group">Group</a></li>
+                    <li><a href="/group">群组</a></li>
                 </ul>
                 
                 <ul class="nav navbar-nav">
-                    <li><a href="/vote">Vote</a></li>
+                    <li><a href="/vote">投票</a></li>
                 </ul>
                 
                 <ul class="nav navbar-nav">
-                    <li><a href="/discover">Discover</a></li>
+                    <li><a href="/discover">发现</a></li>
                 </ul>
                 
                 
                 <ul class="nav navbar-nav" style="float:right">
                   <li>
-                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">Message</a>
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">消息</a>
                     <ul class="dropdown-menu" role="menu">
                       <li><a>TODO</a></li>
                     </ul>

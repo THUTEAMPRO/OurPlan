@@ -1,4 +1,4 @@
-{% extends "bootstrap/base.html" %}
+锘縶% extends "bootstrap/base.html" %}
 
 {% block title %}Ourplan{% endblock %}
 
@@ -16,26 +16,26 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">主页</a></li>
+                <li><a href="/">涓婚〉</a></li>
             </ul>
 
             {% if current_user.is_authenticated %}
                 <ul class="nav navbar-nav">
-                    <li><a href="/group">群组</a></li>
+                    <li><a href="/group">缇ょ粍</a></li>
                 </ul>
                 
                 <ul class="nav navbar-nav">
-                    <li><a href="/vote">投票</a></li>
+                    <li><a href="/vote">鎶曠エ</a></li>
                 </ul>
                 
                 <ul class="nav navbar-nav">
-                    <li><a href="/discover">发现</a></li>
+                    <li><a href="/discover">鍙戠幇</a></li>
                 </ul>
                 
                 
                 <ul class="nav navbar-nav" style="float:right">
                   <li>
-                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">消息</a>
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">娑堟伅</a>
                     <ul class="dropdown-menu" role="menu">
                       <li><a>TODO</a></li>
                     </ul>
@@ -44,11 +44,11 @@
                 
                 
                 <ul class="nav navbar-nav" style="float:right">
-                    <li><a href="/user_edit">User</a></li>
+                    <li><a href="/user_edit">鐢ㄦ埛</a></li>
                 </ul>
                 
                 <ul class="nav navbar-nav" style="float:right">
-                    <li><a href="/auth/logout">logout</a></li>
+                    <li><a href="/auth/logout">鐧诲嚭</a></li>
                 </ul>
                 
                 
@@ -57,11 +57,11 @@
                 
             {% else %}
                 <ul class="nav navbar-nav">
-                    <li><a href="/auth/register">register</a></li>
+                    <li><a href="/auth/register">娉ㄥ唽</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav">
-                    <li><a href="/auth/login">login</a></li>
+                    <li><a href="/auth/login">鐧诲綍</a></li>
                 </ul>
 
             {% endif %}

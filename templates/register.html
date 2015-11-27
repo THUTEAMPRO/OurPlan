@@ -87,9 +87,8 @@
 			  	form.confirmpassword.focus();
            		flag = 1;
         	}
-			alert($('#formAddHandlingFee').serialize());
 			if(flag==0){
-				var AjaxURL= "/api/register";       
+				var AjaxURL= "/api/register";
            		//alert($('#formAddHandlingFee').serialize());
             	$.ajax({
                 	type: "POST",
@@ -98,8 +97,8 @@
                     data: $('#formAddHandlingFee').serialize(),
                     success: function (result) {
                         var strresult=result;
-                        alert(strresult);
-						window.location.href="email.html?email="+$('#email').value;
+                        
+						window.location.href="/email?email="+document.getElementById("email").value;
                     },
                     error: function(data) {
                         alert("error:"+data.responseText);

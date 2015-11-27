@@ -29,7 +29,7 @@ def user(**kwargs):
 def user_register(**kwargs):
     form = RegisterationForm()
     if form.validate_on_submit():
-        username = form.name.data
+        username = form.username.data
         email = form.email.data
         #user1 = User.query.filter_by(username=name).first()
         #user2 = User.query.filter_by(email=email).first()

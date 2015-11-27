@@ -27,17 +27,24 @@ def user(**kwargs):
 
 @api_impl("/register", methods=["POST"])
 def user_register(**kwargs):
-    form = RegisterationForm()
+    form = RegistrationForm(csrf_enabled=False)
     if form.validate_on_submit():
-        username = form.name.data
-        email = form.email.data
-        #user1 = User.query.filter_by(username=name).first()
-        #user2 = User.query.filter_by(email=email).first()
-    #if (user1 is None) and (user2 is None):
-        db = get_db()
-        user_tmp = User(username=username, email=email)
-        user_tmp.password = form.password.data
-        db.session.add(user_tmp);
+        username = form.username.data
+        emails = form.email.data
+        password = form.password.data
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            db = get_db()
+            user_tmp = User(username=username, email=emails)
+            user_tmp.password=password
+            db.session.add(user_tmp)
+            db.session.commit()
+            login_user(user_tmp)
+            session['known'] = False
+        else:
+            session['known'] = True
+        session['name'] = username
+        session['email'] = emails
         return dict(success=1)
     else:
         return dict(fail=1)

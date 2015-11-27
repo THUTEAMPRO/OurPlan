@@ -3,7 +3,7 @@
 # $Author: cz <chenze-321n[at]163[dot]com>
 
 from util import *
-from model import UserTag, GroupTag
+from model import UserTag, GroupTag, Group
 from flask_login import current_user
     
 """
@@ -51,6 +51,17 @@ def group_del_tag(**kwargs):
         return dict(fail=1)
 
 
+@api_impl("/find_group_by_tag/<string:tag>",methods=["POST","GET"])
+def find_group_by_tag(**kwargs):
+    tag=kwargs["tag"]
+    groupTag = GroupTag.query.filter_by(tag=tag).all();
+    groupJsonList=[]
+    for tag in groupTag:
+        group=Group.query.filter_by(id=tag.groupid).first();
+        groupJson=dict(jointype=group.jointype,describe=group.describe,groupname=tag.groupname,groupid=tag.groupid)
+        groupJsonList.append(groupJson)
+        
+    return groupJsonList
 
 
 """

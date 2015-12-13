@@ -19,8 +19,6 @@ function DateClass(_container) {
                  _month = parseInt(ymd[1]);
                  _date = parseInt(ymd[2]);
                  
-            
-    
                  today_year = new Date().getFullYear();
                  today_month = new Date().getMonth() ;
                  today_date = new Date().getDate();
@@ -52,13 +50,13 @@ function DateClass(_container) {
         
         	this.Tbody = ' ';
         	 for (var i = 0; i < 24; i++) {
-        	 	this.Tbody += '<tr> <td align="right" class="WeekTd">'+i+':00</td>'
+                                    this.Tbody += '<tr><td align="right" class="WeekTd">'+i+':00</td>'
                  var data_hour=i;
         	 	for (var j = 0; j < this.weekArr.length; j++) {
                     var data_date=this.checkDate(_year, _month+1, eval(first_date_of_week+j), j);
                     var newDiv='<div class="week task" data-hour='+data_hour+' data-date='+data_date+'></div>';
         	 		this.Tbody += '<td class="out">'+newDiv+'</td>'
-        	 	}
+        	 	}    
         	 	this.Tbody += '</tr>';
         	 }
                  this.TFoot = '</table>\n';
@@ -191,5 +189,6 @@ function DateClass(_container) {
     window.onload = function() {
          myTable= new DateClass(self.wTableContainer);
          myTable.showWeekTable(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getDay());
+         
     }
     

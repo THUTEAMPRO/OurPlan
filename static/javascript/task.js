@@ -33,6 +33,12 @@ var week_bind_task=function(){
         var label="<label data-id="+id+">"+task.title+"</label>"
         $(selector).html(label);
     }
+    $("td.out").on("mouseenter",function(){
+                  $(this).css({"color":"blue","border":"2px solid buttonface"});
+           });
+    $("td.out").on("mouseleave",function(){
+                     $(this).css({"color":"blue","border":"1px solid buttonface"});
+              });
     $("td.out").on("click",function(e){
         var $tdout=$(e.target).closest("td.out");
         var tid=$tdout.find("label").attr("data-id");
@@ -62,6 +68,7 @@ var week_bind_button=function(){
         nd();
         nd();
     });
+
     $("button.update").on("click",function(e){
         var tid=$(e.target).closest("div.data").attr("data-id");
         var title=$("#overDiv input").val();
@@ -121,6 +128,7 @@ $(document).ready(function(){
             nd();
         }
     });
+
     $("div.container").on("click",function(e){
         var $tdout=$(e.target).closest("td.out");
         if($tdout.size()==0){

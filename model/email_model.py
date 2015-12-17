@@ -8,8 +8,8 @@ import smtplib
 if __name__ == '__main__':
 
 
-    from_addr = 'huashiyiqike@qq.com'
-    password = 'lvqi056496748'
+    from_addr = ""
+    password = ""
 
     smtp_server = 'smtp.qq.com'
 

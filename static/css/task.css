@@ -11,3 +11,8 @@ label{
 #menu h2{
     font-size:20px;
 }
+.enter_effect{
+   border:2px solid buttonface;
+   background-color:#556677;
+   outline-color:blue
+}

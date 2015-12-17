@@ -34,10 +34,11 @@ var week_bind_task=function(){
         $(selector).html(label);
     }
     $("td.out").on("mouseenter",function(){
-                  $(this).css({"color":"blue","border":"2px solid buttonface"});
+                  $(this).addClass("enter_effect");
            });
-    $("td.out").on("mouseleave",function(){
-                     $(this).css({"color":"blue","border":"1px solid buttonface"});
+   $("td.out").on("mouseleave",function(){
+                    $(this).removeClass("enter_effect");
+                    // $(this).css({"color":"blue","border":"1px solid buttonface"});
               });
     $("td.out").on("click",function(e){
         var $tdout=$(e.target).closest("td.out");

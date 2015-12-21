@@ -7,6 +7,7 @@ from task import Task
 from group import Group, GroupRelation, GroupTag
 from friend import Friend
 from vote import Vote
+from message import Message
 
 from server import get_db
 

@@ -3,6 +3,9 @@
 {% block title %}Ourplan{% endblock %}
 
 {% block navbar %}
+<script>
+  var all_message={{all_message|default([])|tojson}};
+</script>
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">

@@ -20,7 +20,10 @@ def home():
             groupid=group["groupid"]
             tasks=api.task.get_group_task(groupid=groupid)
             group_task_data[groupid]=tasks
-    return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data)
+    if "groupid" in request.args.keys():
+        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,selected_groupid=request.args["groupid"])
+    else:
+        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data)
 
 @app.route("/user_edit")
 def user_edit():

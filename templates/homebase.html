@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %} Group {% endblock %}
+
+{% block page_content %}
+<script src="/javascript/jquery-1.8.3.min.js"></script>
+<script src="/javascript/overlib.js"></script>
+<script src="/javascript/task.js"></script>
+<script src="/javascript/group_calendar.js"></script>
+<script src="/javascript/monthtask.js"></script>
+<script src="/javascript/underscore.min.js"></script>
+<script>
+  var user_data={{user_data|tojson}};
+  var user_task_data={{task_data|tojson}};
+  
+  
+  var group_data={{group_data|tojson}};
+  var group_task_data={{group_task_data|tojson}};
+  
+  var task_data={{task_data|tojson}};
+</script>
+  
+<body>
+  <ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+      <a data-toggle="tab" href="#task">日程</a>
+    </li>
+    <li>
+      <a data-toggle="tab" href="#diagram">分析</a>
+    </li>
+  </ul>
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="task">
+      {% block task_content %}{% endblock %}
+    </div>
+    <div class="tab-pane fade" id="diagram">
+      TODO
+    </div>
+  </div>
+</body>
+{% endblock %}

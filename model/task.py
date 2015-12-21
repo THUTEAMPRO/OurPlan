@@ -14,15 +14,17 @@ class Task(_db.Model):
     date = _db.Column(_db.Date, index=True)
     title = _db.Column(_db.String(128),index=True)
     info = _db.Column(_db.String(128), index=True)
+    duration = _db.Column(_db.Integer)
 
-    def __init__(self, username, date, time, title, info):
+    def __init__(self, username, date, time, title, info, duration=0):
         self.username = username
         self.time=time.time()
         self.date=date.date()
         self.title=[title, "untitled"][(title is None) or (title=="")]
         self.info=[info, ""][info is None]
+        self.duration=duration
 
-    def update(self, date=None, time=None, title=None, info=None):
+    def update(self, date=None, time=None, title=None, info=None, duration=None):
         if date is not None:
             self.date=date.date()
         if time is not None:
@@ -31,6 +33,8 @@ class Task(_db.Model):
             self.title=title
         if info is not None:
             self.info=info
+        if duration is not None:
+            self.duration=duration
 
     # role_id = _db.Column(_db.Integer, _db.ForeignKey('roles.id'))
 

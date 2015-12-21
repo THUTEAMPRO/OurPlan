@@ -11,3 +11,4 @@ import friend
 import tag
 import vote
 import test
+import message

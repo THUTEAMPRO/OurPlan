@@ -1,29 +1,15 @@
-{% extends "base.html" %}
-{% block page_content %}
+{% extends "homebase.html" %}
+{% block task_content %}
 
 <link rel="stylesheet" type="text/css" href="ourplan.css" />
 <link rel="stylesheet" type="text/css" href="/css/task.css" />
-<script src="/javascript/jquery-1.8.3.min.js"></script>
-<script src="/javascript/overlib.js"></script>
-<script src="/javascript/task.js"></script>
-<script src="/javascript/group_calendar.js"></script>
-<script src="/javascript/monthtask.js"></script>
-<script src="/javascript/underscore.min.js"></script>
 
 <script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
 
 <script>
-  var user_data={{user_data|tojson}};
-  var user_task_data={{task_data|tojson}};
-  
-  
-  var group_data={{group_data|tojson}};
-  var group_task_data={{group_task_data|tojson}};
-  
-  var task_data={{task_data|tojson}};
   
   var selected_data={
-      groupid:undefined,
+      groupid:{{selected_groupid|default("undefined")}},
       view_type:"week",
       set task_data(val){
       task_data=val
@@ -32,7 +18,6 @@
 </script>
 
 
-<body>
 
 <div id="menu" >
   <div class="panel panel-default">
@@ -41,7 +26,7 @@
     </div>
     <div class="panel-body">
 	  <ul>
-		<li><label><input name="CalendarGroup" type="radio" value="" />个人 </label></li>
+		<li><label class="group user"><input name="CalendarGroup" type="radio" value="" />个人 </label></li>
 	  </ul>
     </div>
 <!------------------>
@@ -51,7 +36,7 @@
     <div class="panel-body">
 	  <ul>
         {% for group in group_data%}
-		<li><label data-id="{{group.groupid}}"><input name="CalendarGroup" type="radio" value="" />{{group.groupname}}</label></li>
+		<li><label class="group" data-id="{{group.groupid}}"><input name="CalendarGroup" type="radio" value="" />{{group.groupname}}</label></li>
         {% endfor %}
 	  </ul>
     </div>
@@ -59,6 +44,18 @@
 </div>
 <script>
 findWeather();
+$(document).ready(function(){
+    if(!selected_data.groupid){
+        $("label.user.group").click();
+    }else{
+        var selected_groupid=selected_data.groupid;
+        if(group_task_data[selected_groupid]){
+            $("label.group[data-id="+selected_data.groupid+"]").click();
+        }else{
+            $("label.user.group").click();
+        }
+    }
+});
 </script>
 
 
@@ -83,6 +80,5 @@ findWeather();
 >
 <!--->
 
-</body>
 
 {% endblock %}

@@ -5,6 +5,7 @@
 from util import *
 from model import Vote, Task
 from model import GroupRelation, Group
+import message
 
     
 class AddVoteForm(Form):
@@ -30,6 +31,7 @@ def add_vote(**kwargs):
             db.session.add(vote)
             db.session.commit()
             vote.set_option(options.split(","))
+            message.vote_add_message(vote)
             return dict(success=1)
         else:
             return dict(fail=1)
@@ -53,6 +55,7 @@ def do_vote(**kwargs):
                             title=vote.title, info=vote.info)
         db.session.add(task_tmp)
         db.session.commit()
+        message.task_add_message(task_tmp)
         return dict(success=1)
     else:
         return dict(success=1)

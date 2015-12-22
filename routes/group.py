@@ -9,4 +9,4 @@ from util import *
 def group():
     api.group.user_update_group();
     group_data=api.group.user_get_group()
-    return render_template("group.html", group_data=group_data);
+    return render_template("group.html", group_data=group_data,all_message=api.message.get_message());

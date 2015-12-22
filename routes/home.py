@@ -7,36 +7,40 @@ from util import *
 @app.route("/")
 @app.route("/home")
 def home():
+    api.message.read_message()
     user_data={}
     task_data=[]
     group_data=[]
     group_task_data={}
+    all_message=[]
     if current_user.is_authenticated:
         user_data=current_user.get_dict()
         task_data=api.task.get_task()
         group_data=api.group.user_get_group()
         group_task_data={}
+        all_message=api.message.get_message()
         for group in group_data:
             groupid=group["groupid"]
             tasks=api.task.get_group_task(groupid=groupid)
             group_task_data[groupid]=tasks
     if "groupid" in request.args.keys():
-        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,selected_groupid=request.args["groupid"])
+        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,selected_groupid=request.args["groupid"],all_message=all_message)
     else:
-        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data)
+        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,all_message=all_message)
 
 @app.route("/user_edit")
 def user_edit():
-    return render_template("user_edit.html")
+    return render_template("user_edit.html",all_message=api.message.get_message())
 
 
 @app.route("/discover")
 def discover():
-    return render_template("discover.html");
+    groups=api.group.all_group()
+    return render_template("discover.html",all_message=api.message.get_message(),all_group=groups);
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html");
+    return render_template("contact.html",all_message=api.get_message());
 
 @app.route("/login")
 def _login():

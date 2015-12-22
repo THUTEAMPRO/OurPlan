@@ -21,6 +21,11 @@ class UpdateGroupForm(Form):
     jointype = IntegerField("jointype")
     tag = StringField("tags")
     describe = StringField("describe")
+
+@api_impl("/all_group",methods=["POST","GET"])
+def all_group(**kwargs):
+    groups=Group.query.filter_by().all()
+    return map(lambda g:g.get_dict(),groups)
     
 @api_impl("/user_update_group",methods=["POST","GET"])
 @login_required

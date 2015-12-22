@@ -31,6 +31,7 @@ class Message(_db.Model):
 
     def get_dict(self):
         return dict(id=self.id,\
+                    userid=self.userid,\
                     messageInfo=self.messageInfo,\
                     messageUrl=self.messageUrl,\
                     checked=self.checked)

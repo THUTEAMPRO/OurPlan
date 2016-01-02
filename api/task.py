@@ -8,6 +8,7 @@ from model import Task
 class AddTaskForm(Form):
     date = DateTimeField('Date', format="%Y-%m-%d", validators=[Required()])
     time = DateTimeField('Time', format="%H:%M:%S", validators=[Required()])
+    duration = DateTimeField("Duration", format="%H:%M:%S", validators=[Required()])
     info = StringField("Info")
     title = StringField("Title")
     groupid = IntegerField("GroupId")
@@ -22,7 +23,7 @@ def add_task(**kwargs):
             task_username = "_group_" + str(form.groupid.data)
         task_tmp = Task(username=task_username,\
                             date=form.date.data, time=form.time.data,\
-                            title=form.title.data, info=form.info.data)
+                            title=form.title.data, info=form.info.data,duration=form.duration.data)
         db.session.add(task_tmp)
         db.session.commit()
         return dict(success=1,id=task_tmp.id,title=task_tmp.title)
@@ -47,6 +48,7 @@ class UpdateTaskForm(Form):
     id = IntegerField("Info", validators=[Required()])
     date = DateTimeField('Date', format="%Y-%m-%d")
     time = DateTimeField('Time', format="%H:%M:%S")
+    duration = DateTimeField("Duration", format="%H:%M:%S", validators=[Required()])
     info = StringField("Info")
     title = StringField("Title")
 
@@ -60,7 +62,8 @@ def update_task(**kwargs):
             task_tmp.update(date=form.date.data,\
                                 time=form.time.data,\
                                 title=form.title.data,\
-                                info=form.info.data)
+                                info=form.info.data,\
+                                duration=form.duration.data)
             return dict(success=1)
         else:
             return dict(fail=2)

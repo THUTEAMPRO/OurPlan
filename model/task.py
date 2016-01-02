@@ -14,7 +14,7 @@ class Task(_db.Model):
     date = _db.Column(_db.Date, index=True)
     title = _db.Column(_db.String(128),index=True)
     info = _db.Column(_db.String(128), index=True)
-    duration = _db.Column(_db.Integer)
+    duration = _db.Column(_db.Time)
 
     def __init__(self, username, date, time, title, info, duration=0):
         self.username = username
@@ -22,7 +22,7 @@ class Task(_db.Model):
         self.date=date.date()
         self.title=[title, "untitled"][(title is None) or (title=="")]
         self.info=[info, ""][info is None]
-        self.duration=duration
+        self.duration=duration.time()
 
     def update(self, date=None, time=None, title=None, info=None, duration=None):
         if date is not None:
@@ -34,7 +34,7 @@ class Task(_db.Model):
         if info is not None:
             self.info=info
         if duration is not None:
-            self.duration=duration
+            self.duration=duration.time()
 
     # role_id = _db.Column(_db.Integer, _db.ForeignKey('roles.id'))
 
@@ -43,9 +43,21 @@ class Task(_db.Model):
 
     def get_dict(self):
         date=self.date
-        return dict(id=self.id,\
-            username=self.username,\
-            time=self.time.strftime("%H:%M:%S"),\
-            date="-".join(map(str,[date.year,date.month,date.day])),\
-            title=self.title,\
-            info=self.info)
+        username=self.username
+        if username.find("_group_")>=0:
+            return dict(id=self.id,\
+                username=self.username,\
+                time=self.time.strftime("%H:%M:%S"),\
+                date="-".join(map(str,[date.year,date.month,date.day])),\
+                title=self.title,\
+                info=self.info,\
+                groupid=username.replace("_group_",""),\
+                duration=self.duration.strftime("%H:%M:%S"))
+        else:
+            return dict(id=self.id,\
+                username=self.username,\
+                time=self.time.strftime("%H:%M:%S"),\
+                date="-".join(map(str,[date.year,date.month,date.day])),\
+                title=self.title,\
+                info=self.info,\
+                duration=self.duration.strftime("%H:%M:%S"))

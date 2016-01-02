@@ -6,7 +6,11 @@ label:hover{
 }
 label{
     color:#000000;
-    font-size:20px;
+    font-size:16px;
+}
+#overDiv label{
+    color:#000000;
+    font-size:10px;
 }
 #menu h2{
     font-size:20px;

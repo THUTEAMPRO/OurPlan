@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %} Group {% endblock %}
 
 {% block page_content %}
@@ -19,7 +19,7 @@
           <ul class="list-group">
             {% for group in all_group %}
             <li class="list-group-item">
-              <h4><label>组名: </label>{{group.groupname}}</h4>
+              <h4><label>组名: </label>{{group.groupname}} <a href="#">申请</a></h4>
               <h5><label>群组描述:</label>{{group.describe}}</h5>
             </li>
             {% endfor %}

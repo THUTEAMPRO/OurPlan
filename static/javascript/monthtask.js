@@ -24,7 +24,8 @@ var month_util={
     templateHTML:
     '<div>'+
         '<div><label>date:</label><%=date%></div>'+
-        '<div><label>time:</label><%=timeselect%></div>'+
+        '<div class="time"><label>time:</label><%=timeselect%></div>'+
+        '<div class="duration"><label>duration:</label><%=durationselect%></div>'+
         '<div><label>title:</label><input value="<%=title%>"></input></div>'+
         '<div><label>info:</label><textarea><%=info%></textarea></div>'+
         '<div class="data" <%=data%>><%=button%></div>'+
@@ -37,11 +38,12 @@ var month_util={
             second:Number(split[2])
         });
     },
-    template:function(date,time,title,info,tid){
+    template:function(date,time,duration,title,info,tid){
         var button="";
         if(time){
             var data='data-date='+date+' data-id='+tid;
             var timeHTML=month_util.tstemplate(time);
+            var durationHTML=month_util.tstemplate(duration)
             button='<button class="del">del</button>'+'<button class="update">update</button>';
             return _.template(month_util.templateHTML)({
                 title:title,
@@ -49,12 +51,15 @@ var month_util={
                 date:date,
                 data:data,
                 timeselect:timeHTML,
+                durationselect:durationHTML,
                 button:button
             });
         }else{
             var data='data-date='+date;
             time="00:00:00";
+            duration="1:00:00";
             var timeHTML=month_util.tstemplate(time);
+            var durationHTML=month_util.tstemplate(duration);
             button='<button class="add">add</button>';
             return _.template(month_util.templateHTML)({
                 title:title,
@@ -62,6 +67,7 @@ var month_util={
                 date:date,
                 data:data,
                 timeselect:timeHTML,
+                durationselect:durationHTML,
                 button:button
             });
         }
@@ -86,7 +92,7 @@ var month_util={
             }else{
                 var tid=$tdout.find("label").attr("data-id");
                 var task=task_data[tid];
-                overlib(month_util.template(task.date,task.time,task.title,task.info,task.id),STICKY);
+                overlib(month_util.template(task.date,task.time,task.duration,task.title,task.info,task.id),STICKY);
                 month_util.bind_button();
             }
         });
@@ -114,18 +120,32 @@ var month_util={
             var tid=$(e.target).closest("div.data").attr("data-id");
             var title=$("#overDiv input").val();
             var info=$("#overDiv textarea").val();
-            var hour=$("#overDiv select.hour").val();
-            var minute=$("#overDiv select.minute").val();
-            var second=$("#overDiv select.second").val();
-            hour=month_util.timenum2str(hour);
-            minute=month_util.timenum2str(minute);
-            second=month_util.timenum2str(second);
-            var time=hour+":"+minute+":"+second;
+            var time=(function(){
+                var hour=$("#overDiv div.time select.hour").val();
+                var minute=$("#overDiv div.time select.minute").val();
+                var second=$("#overDiv div.time select.second").val();
+                hour=month_util.timenum2str(hour);
+                minute=month_util.timenum2str(minute);
+                second=month_util.timenum2str(second);
+                var time=hour+":"+minute+":"+second;
+                return time;
+            }());
+            var duration=(function(){
+                var hour=$("#overDiv div.duration select.hour").val();
+                var minute=$("#overDiv div.duration select.minute").val();
+                var second=$("#overDiv div.duration select.second").val();
+                hour=month_util.timenum2str(hour);
+                minute=month_util.timenum2str(minute);
+                second=month_util.timenum2str(second);
+                var duration=hour+":"+minute+":"+second;
+                return duration;
+            }());
             $.post("/api/update_task", {
                 id:tid,
                 info:info,
                 title:title,
                 time:time,
+                duration:duration
             },
                    function(data){
                        if(data.fail){
@@ -134,6 +154,7 @@ var month_util={
                            task_data[tid].title=title;
                            task_data[tid].info=info;
                            task_data[tid].time=time;
+                           task_data[tid].duration=duration;
                            month_util.bind_task();
                        }
                    });
@@ -144,19 +165,32 @@ var month_util={
             var date=$(e.target).closest("div.data").attr("data-date");
             var title=$("#overDiv input").val();
             var info=$("#overDiv textarea").val();
-            
-            var hour=$("#overDiv select.hour").val();
-            var minute=$("#overDiv select.minute").val();
-            var second=$("#overDiv select.second").val();
-            hour=month_util.timenum2str(hour);
-            minute=month_util.timenum2str(minute);
-            second=month_util.timenum2str(second);
-            var time=hour+":"+minute+":"+second;
+            var time=(function(){
+                var hour=$("#overDiv div.time select.hour").val();
+                var minute=$("#overDiv div.time select.minute").val();
+                var second=$("#overDiv div.time select.second").val();
+                hour=month_util.timenum2str(hour);
+                minute=month_util.timenum2str(minute);
+                second=month_util.timenum2str(second);
+                var time=hour+":"+minute+":"+second;
+                return time;
+            }());
+            var duration=(function(){
+                var hour=$("#overDiv div.duration select.hour").val();
+                var minute=$("#overDiv div.duration select.minute").val();
+                var second=$("#overDiv div.duration select.second").val();
+                hour=month_util.timenum2str(hour);
+                minute=month_util.timenum2str(minute);
+                second=month_util.timenum2str(second);
+                var duration=hour+":"+minute+":"+second;
+                return duration;
+            }());
             
             $.post("/api/add_task",
                    {
-                       time:time,
                        date:date,
+                       time:time,
+                       duration:duration,
                        info:info,
                        title:title,
                        groupid:selected_data.groupid
@@ -169,6 +203,7 @@ var month_util={
                                id:data.id,
                                date:date,
                                time:time,
+                               duration:duration,
                                info:info,
                                title:data.title,
                            }

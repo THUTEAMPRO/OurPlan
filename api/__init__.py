@@ -12,3 +12,4 @@ import tag
 import vote
 import test
 import message
+import share

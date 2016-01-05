@@ -79,7 +79,7 @@ var month_util={
             var task=task_data[id];
             var hour=eval(task.time.split(":")[0]);
             var selector="div.task.month[data-date="+task.date+"]";
-            var label="<div><label data-id="+id+" data-time="+task.time+" data-date="+task.date+">"+task.title+"</label></div>";
+            var label='<div><label class="tasklabel" data-id='+id+" data-time="+task.time+" data-date="+task.date+">"+task.title+"</label></div>";
             $(selector).append(label);
         }
         $("td.out").on("click",function(e){

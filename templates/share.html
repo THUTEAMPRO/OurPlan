@@ -1,0 +1,73 @@
+{% extends "homebase.html" %}
+{% block task_content %}
+
+<link rel="stylesheet" type="text/css" href="ourplan.css" />
+<link rel="stylesheet" type="text/css" href="/css/task.css" />
+
+<script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
+
+<script>
+  
+  var selected_data={
+      groupid:{{selected_groupid|default("undefined")}},
+      view_type:"week",
+      set task_data(val){
+      task_data=val
+      }
+  }
+</script>
+
+
+
+<div id="menu" >
+  <div class="panel panel-default">
+    <div class="panel-heading">
+	  <h2 class="panel-title">临时日程表</h2>
+    </div>
+    <div class="panel-body">
+	  <ul>
+		<li><label class="group user"><input name="CalendarGroup" type="radio" value="" />日程表 </label></li>
+	  </ul>
+    </div>
+    <div class="panel-footer">
+      <div>分享到:</div>
+      <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+    </div>
+<!------------------>
+  </div>
+</div>
+<script>
+findWeather();
+$(document).ready(function(){
+    $("label.user.group").click();
+});
+</script>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"·ÖÏíµ½£º","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span id="weather"></span>
+    <div id="content" style="overflow:auto">
+	  <div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 
+	  
+    </div>
+  </div>
+</div>
+
+<!--- 
+<div id="wTableContainer"><script src="/javascript/table.week.js"></script></div> 
+	<div id="mTableContainer"><script src="/javascript/table.month.js"></script></div> 
+
+	<div id="wTableContainer">hahah 1</div> 
+	<div id="mTableContainer">hahah 2</div> 
+>
+<!--->
+
+
+{% endblock %}
+
+{% block analyse_content %}
+{% endblock %}

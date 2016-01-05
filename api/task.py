@@ -85,13 +85,7 @@ def get_group_task(**kwargs):
         return dict();
 
 
-"""
-@app.route("/task_test", methods=["POST","GET"])
+@api_impl("/task_test", methods=["POST","GET"])
 def task_test():
-    form = AddTaskForm();
-    if form.validate_on_submit():
-        print "yes"
-        return render_template("task.html",form=form)
-    else:
-        return render_template("task.html",form=form)
-"""
+    tasks=Task.query.filter_by().all()
+    return dict(map(lambda t:(t.id,t.get_dict()), tasks))

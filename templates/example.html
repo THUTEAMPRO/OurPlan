@@ -3,6 +3,7 @@
 
 <link rel="stylesheet" type="text/css" href="ourplan.css" />
 <link rel="stylesheet" type="text/css" href="/css/task.css" />
+<script src="/javascript/share.js"></script>
 
 <script src="{{ url_for('static', filename='javascript/weather.js') }}" language="javascript" type="text/javascript" charset="UTF-8"></script>
 
@@ -62,8 +63,17 @@ $(document).ready(function(){
 
 
 <div class="panel panel-default">
-  <div class="panel-body">
+  <div class="panel-head">
     <span id="weather"></span>
+    <div>
+      <form id="shareform" action="share?shareid={{uuid}}" method="post">
+        <input name="tempid" type="hidden" value="{{uuid}}"></input>
+        <input name="tasklist" type="hidden"></input>
+        <input type="submit" value="生成临时日程表" onclick="return share_util.submit()"/>
+      </form>
+    </div>
+  </div>
+  <div class="panel-body">
     <div id="content" style="overflow:auto">
 	  <div id="wTableContainer"><script src="/javascript/table.mw.js"></script></div> 
 	  

@@ -4,7 +4,26 @@
 
 
 from server import get_db
+import datetime
 
+def timeParse(sth):
+    if type(sth)==datetime.time:
+        return sth
+    elif type(sth)==datetime.datetime:
+        return sth.time()
+    else:
+        print "time type error"
+        return datetime.min().time()
+
+def dateParse(sth):
+    if type(sth)==datetime.date:
+        return sth
+    elif type(sth)==datetime.datetime:
+        return sth.date()
+    else:
+        print "date type error"
+        return datetime.min().date()
+    
 _db=get_db()
 class Task(_db.Model):
     __tablename__ = 'tasks'
@@ -18,11 +37,12 @@ class Task(_db.Model):
 
     def __init__(self, username, date, time, title, info, duration=0):
         self.username = username
-        self.time=time.time()
-        self.date=date.date()
+        self.time=timeParse(time)
+        self.date=dateParse(date)
+
         self.title=[title, "untitled"][(title is None) or (title=="")]
         self.info=[info, ""][info is None]
-        self.duration=duration.time()
+        self.duration=timeParse(duration)
 
     def update(self, date=None, time=None, title=None, info=None, duration=None):
         if date is not None:

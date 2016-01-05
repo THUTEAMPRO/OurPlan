@@ -61,7 +61,7 @@ var week_bind_task=function(){
         var task=task_data[id];
         var hour=eval(task.time.split(":")[0]);
         var selector="div.task.week[data-date="+task.date+"][data-hour="+hour+"]";
-        var label="<label data-id="+id+">"+task.title+"</label>"
+        var label='<label class="tasklabel" data-id='+id+">"+task.title+"</label>"
         $(selector).append(label);
     }
     $("td.out").on("mouseenter",function(){

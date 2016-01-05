@@ -2,6 +2,7 @@
 # $File: home.py
 # $Author: cz <chenze-321n[at]163[dot]com>
 from util import *
+import uuid
 
 
 @app.route("/")
@@ -13,6 +14,7 @@ def home():
     group_data=[]
     group_task_data={}
     all_message=[]
+    put_uuid=str(uuid.uuid1())
     if current_user.is_authenticated:
         user_data=current_user.get_dict()
         task_data=api.task.get_task()
@@ -24,9 +26,23 @@ def home():
             tasks=api.task.get_group_task(groupid=groupid)
             group_task_data[groupid]=tasks
     if "groupid" in request.args.keys():
-        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,selected_groupid=request.args["groupid"],all_message=all_message)
+        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,selected_groupid=request.args["groupid"],all_message=all_message,uuid=put_uuid)
     else:
-        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,all_message=all_message)
+        return render_template("example.html", user_data=user_data, task_data=task_data, group_data=group_data, group_task_data=group_task_data,all_message=all_message,uuid=put_uuid)
+
+@app.route("/share",methods=["POST","GET"])
+def share():
+    if current_user.is_authenticated:
+        api.share.create_temp_task()
+    user_data={}
+    task_data=[]
+    group_data=[]
+    group_task_data={}
+    if "shareid" in request.args.keys():
+        shareid=request.args["shareid"]
+        user_data=dict(username="temp")
+        task_data=api.share.get_temp_task(tempid=shareid)
+    return render_template("share.html", user_data=user_data, task_data=task_data, group_data=[], group_task_data={})
 
 @app.route("/user_edit")
 def user_edit():

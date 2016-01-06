@@ -68,6 +68,7 @@ var vote_util={
             title:$("input#votetitle").val(),
             info:$("input#voteinfo").val(),
             limit:$("input#votelimit").val(),
+            duration:$("input#voteduration").val()+":00:00",
             groupid:selected_data.groupid,
             options:vote_util.get_options()
         };

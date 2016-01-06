@@ -42,6 +42,7 @@ var group_util={
                 selected_data.groupid=groupid;
                 $.get("/api/group_get_property/"+groupid,function(data){
                     group_member_util.render(data);
+                    group_apply_member_util.render(data);
                     group_property_util.render(data);
                     selected_data.group=data;
                 });
@@ -175,6 +176,41 @@ var group_member_util={
         $("ul#memberlist a[data-id="+user.userid+"]").closest("li").remove();
     }
 }
+var group_apply_member_util={
+    listTemplateHTML:"<li><h4><%=username%>&nbsp;&nbsp&nbsp"+
+        '<a class="allowmember" data-id="<%=userid%>">Allow</a></h4></li>',
+    bind:function(){
+        $("ul#applymemberlist").click(function(e){
+            var groupid=selected_data.groupid;
+            if(!groupid){
+                return ;
+            }
+            var $a=$(e.target).closest("a.allowmember");
+            if($a.length==1){
+                var userid=$a.attr("data-id");
+                $.get("/api/group_allow_member/"+groupid+"/"+userid,function(data){
+                    if(data.fail){
+                        console.log("allow fail");
+                    }else{
+                        group_apply_member_util.allowRender({
+                            userid:userid
+                        });
+                    }
+                });
+            }
+        });
+    },
+    render:function(groupdata){
+        $("ul#applymemberlist").html("");
+        _.each(groupdata.applyMembers,function(user){
+            var html=_.template(group_apply_member_util.listTemplateHTML)(user);
+            $("ul#applymemberlist").append(html);
+        });
+    },
+    allowRender:function(user){
+        $("ul#applymemberlist a[data-id="+user.userid+"]").closest("li").remove();
+    }
+}
 var friend_util={
     friendTemplateHTML:"<li><h4>Username : <%=username%></h4>"+
         "<h4>Email : <%=email%></h4></li>"+
@@ -228,6 +264,7 @@ $(document).ready(function(){
     friend_util.bind();
     group_member_util.bind();
     group_property_util.bind();
+    group_apply_member_util.bind();
     var groupid=window.location.hash.substr(1);
     $("label[data-"+groupid+"] input.groupselect").click();
 });

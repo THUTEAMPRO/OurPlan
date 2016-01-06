@@ -113,6 +113,18 @@ def group_add_member(**kwargs):
     else:
         return dict(fail=1)
 
+@api_impl("/group_allow_member/<int:groupid>/<int:userid>",methods=["POST","GET"])
+@login_required
+def group_allow_member(**kwargs):
+    groupid = kwargs["groupid"]
+    userid = kwargs["userid"]
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        group.allow_member(userid)
+        return dict(success=1)
+    else:
+        return dict(fail=1)
+
 @api_impl("/group_del_member/<int:groupid>/<int:userid>",methods=["POST","GET"])
 @login_required
 def group_del_member(**kwargs):
@@ -128,10 +140,23 @@ def group_del_member(**kwargs):
 @api_impl("/group_exit/<int:groupid>",methods=["POST","GET"])
 @login_required
 def group_exit(**kwargs):
+    print "dosth"
     groupid = kwargs["groupid"]
     group = Group.query.filter_by(id=groupid).first()
     if group is not None:
         group.del_member(current_user.id);
         return dict(success=1);
+    else:
+        return dict(fail=1)
+
+@api_impl("/group_join/<int:groupid>",methods=["POST","GET"])
+@login_required
+def group_join(**kwargs):
+    groupid = kwargs["groupid"]
+    userid = current_user.id
+    group = Group.query.filter_by(id=groupid).first()
+    if group is not None:
+        group.join_member(userid)
+        return dict(success=1)
     else:
         return dict(fail=1)

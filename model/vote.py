@@ -6,6 +6,7 @@
 from server import get_db
 import datetime
 from group import Group
+import datetime
 
 
 _db=get_db()
@@ -28,13 +29,18 @@ class Vote(_db.Model):
     groupid = _db.Column(_db.Integer, index=True)
     title = _db.Column(_db.String(128), index=True)
     info = _db.Column(_db.String(128))
+    duration = _db.Column(_db.Time)
     limit = _db.Column(_db.Integer)
     finished = _db.Column(_db.Boolean)
 
-    def __init__(self,groupid,title,info,limit):
+    def __init__(self,groupid,title,info,limit,duration):
         self.groupid=groupid
         self.title=title
         self.info=info
+        if type(duration)==datetime.datetime:
+            self.duration=duration.time()
+        else:
+            self.duration=duration;
         if limit is None:
             self.limit = 2
         else:

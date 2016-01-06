@@ -11,9 +11,10 @@ import message
 class AddVoteForm(Form):
     groupid = IntegerField('groupid', validators=[Required()])
     title = StringField('title', validators=[Required()])
-    info = StringField('info')
-    limit = IntegerField("limit")
+    duration = DateTimeField("Duration", format="%H:%M:%S", validators=[Required()])
+    limit = IntegerField("limit",validators=[Required()])
     options = StringField('options',validators=[Required()])
+    info = StringField('info')
 
 @api_impl("/add_vote",methods=["POST","GET"])
 @login_required
@@ -26,8 +27,9 @@ def add_vote(**kwargs):
         info = form.info.data
         limit = form.limit.data
         options = form.options.data
+        duration = form.duration.data
         if form.groupid.data is not None:
-            vote = Vote(groupid,title,info,limit)
+            vote = Vote(groupid,title,info,limit,duration)
             db.session.add(vote)
             db.session.commit()
             vote.set_option(options.split(","))
@@ -52,10 +54,11 @@ def do_vote(**kwargs):
         task_username = "_group_" + str(vote.groupid)
         task_tmp = Task(username=task_username,\
                             date=datetime, time=datetime,\
-                            title=vote.title, info=vote.info)
+                            title=vote.title, info=vote.info,\
+                        duration=vote.duration)
         db.session.add(task_tmp)
-        db.session.commit()
         message.task_add_message(task_tmp)
+        db.session.commit()
         return dict(success=1)
     else:
         return dict(success=1)

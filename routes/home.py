@@ -52,6 +52,16 @@ def user_edit():
 @app.route("/discover")
 def discover():
     groups=api.group.all_group()
+    for group in groups:
+        group["imin"]=0
+        group["wait"]=0
+        if current_user.is_authenticated:
+            for member in group["members"]:
+                if member["userid"]==current_user.id:
+                    group["imin"]=1
+            for member in group["applyMembers"]:
+                if member["userid"]==current_user.id:
+                    group["wait"]=1
     return render_template("discover.html",all_message=api.message.get_message(),all_group=groups);
 
 @app.route("/contact")

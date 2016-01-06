@@ -90,7 +90,7 @@ var month_util={
                 overlib(month_util.template(data_date),STICKY);
                 month_util.bind_button();
             }else{
-                var tid=$tdout.find("label").attr("data-id");
+                var tid=$label.attr("data-id");
                 var task=task_data[tid];
                 overlib(month_util.template(task.date,task.time,task.duration,task.title,task.info,task.id),STICKY);
                 month_util.bind_button();

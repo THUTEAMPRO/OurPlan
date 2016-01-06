@@ -6,6 +6,7 @@
 from server import get_db
 from user import User
 
+POWER_TEMP=-1
 POWER_CREATER=1
 POWER_MANAGER=2
 POWER_MEMBER=3
@@ -39,12 +40,24 @@ class Group(_db.Model):
         if(jointype>=1 and jointype<=3):
             self.jointype = jointype;
 
-    def add_member(self, userid):
+    def join_member(self,userid):
+        if self.jointype==GROUP_JOIN_ALLOW:
+            self.add_member(userid,POWER_TEMP)
+        else:
+            self.add_member(userid,POWER_MEMBER)
+
+    def allow_member(self, userid):
+        relation = GroupRelation.query.filter_by(groupid=self.id,userid=userid).first()
+        if(relation is not None):
+            relation.power=POWER_MEMBER
+            _db.session.commit()
+
+    def add_member(self, userid, power=POWER_MEMBER):
         relation = GroupRelation.query.filter_by(groupid=self.id,userid=userid).first()
         if(relation is not None):
             return ;
         else:
-            relation = GroupRelation(userid, self.id, POWER_MEMBER)
+            relation = GroupRelation(userid, self.id, power)
             _db.session.add(relation)
             _db.session.commit()
             
@@ -87,27 +100,35 @@ class Group(_db.Model):
                 
     def get_member(self):
         relations = GroupRelation.query.filter_by(groupid=self.id).all()
-        users = map(lambda r:User.query.filter_by(id=r.userid).first(), relations)
+        userRelations = map(lambda r:User.query.filter_by(id=r.userid).first(),r, relations)
         userJson= []
-        for u in users:
-            if(u is not None):
+        for u,r in userRelations:
+            if((u is not None) and r.power!=POWER_TEMP):
                 userJson.append(dict(username=u.username,userid=u.id))
         return userJson
                 
     def get_dict(self):
         relations = GroupRelation.query.filter_by(groupid=self.id).all()
         userJson= []
+        tempJson= []
         for r in relations:
-            u = User.query.filter_by(id=r.userid).first();
-            userJson.append(dict(username=u.username,userid=u.id,\
-                                 power=r.power))
+            if r.power!=POWER_TEMP:
+                u = User.query.filter_by(id=r.userid).first();
+                userJson.append(dict(username=u.username,userid=u.id,\
+                                    power=r.power))
+            else:
+                u = User.query.filter_by(id=r.userid).first();
+                tempJson.append(dict(username=u.username,userid=u.id,\
+                                    power=r.power))
         return dict(id=self.id,\
                         createrid=self.createrid,\
                         groupname=self.groupname,\
                         jointype=self.jointype,\
                         describe=self.describe,\
                         tag=self.get_tag(),\
-                        members=userJson)
+                        members=userJson,\
+                        applyMembers=tempJson)
+
     @staticmethod
     def get_one(group):
         if type(group)==int:

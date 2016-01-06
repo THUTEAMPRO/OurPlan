@@ -5,6 +5,7 @@
 
 <script src="/javascript/jquery-1.8.3.min.js"></script>
 <script src="/javascript/underscore.min.js"></script>
+<script src="/javascript/discover.js"></script>
 
 
 <body>
@@ -18,10 +19,31 @@
           </div>
           <ul class="list-group">
             {% for group in all_group %}
-            <li class="list-group-item">
-              <h4><label>组名: </label>{{group.groupname}} <a href="#">申请</a></h4>
-              <h5><label>群组描述:</label>{{group.describe}}</h5>
-            </li>
+                {% if group.imin==1 %}
+                    <li class="list-group-item">
+                    <h4><label>组名: </label>{{group.groupname}} </h4>
+                    <h5><label>群组描述:</label>{{group.describe}}</h5>
+                    <h5><label>已加入&nbsp;&nbsp;&nbsp;</label><a data-id="{{group.id}}" class="exit" href="#">退出</a></h5>
+                    </li>
+                {% elif group.wait==1 %}
+                    <li class="list-group-item">
+                    <h4><label>组名: </label>{{group.groupname}} </h4>
+                    <h5><label>群组描述:</label>{{group.describe}}</h5>
+                    <h5><label>已申请</label></h5>
+                    </li>
+                {% elif group.jointype==2 %}
+                    <li class="list-group-item">
+                    <h4><label>组名: </label>{{group.groupname}} </h4>
+                    <h5><label>群组描述:</label>{{group.describe}}</h5>
+                    <h5><label>加入方式:</label>申请加入&nbsp;&nbsp;&nbsp;<a data-id="{{group.id}}" class="join" href="#">申请</a></h5>
+                    </li>
+                {% elif group.jointype==3 %}
+                    <li class="list-group-item">
+                    <h4><label>组名: </label>{{group.groupname}} </h4>
+                    <h5><label>群组描述:</label>{{group.describe}}</h5>
+                    <h5><label>加入方式:</label>自由加入&nbsp;&nbsp;&nbsp;<a data-id="{{group.id}}" class="join" href="#">加入</a></h5>
+                    </li>
+                {% endif %}
             {% endfor %}
           </ul>
         </div>

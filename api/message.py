@@ -23,6 +23,7 @@ def read_message():
         mid=request.args["messageid"]
         message=Message.query.filter_by(id=mid).first();
         message.checked=True;
+    db.session.commit()
     return dict(success=1)
 
 def add_message(**kwargs):
